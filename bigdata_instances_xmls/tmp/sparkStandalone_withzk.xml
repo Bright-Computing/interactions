@@ -1,0 +1,32 @@
+<sparkConfig>
+  <archive>spark-1.5.1-bin-hadoop2.6.tgz</archive>
+  <javahome>/usr/lib/jvm/jre/</javahome>
+  <instance>
+    <name>sparkStandalone_withzk</name>
+    <masters recovery="ZOOKEEPER">
+      <hosts>node001</hosts>
+      <port>7070</port>
+      <webport>9080</webport>
+      <historywebport>19080</historywebport>
+      <localdir>/tmp/spark/spark151</localdir>
+    </masters>
+    <workers>
+      <hosts>node002..node004</hosts>
+      <port>7071</port>
+      <webport>9081</webport>
+      <numcores>0</numcores>
+      <numinstances>1</numinstances>
+      <workerdir>/tmp/spark/spark151</workerdir>
+      <cleanupenabled>true</cleanupenabled>
+      <cleanupinterval>1800</cleanupinterval>
+      <cleanupappdatattl>604800</cleanupappdatattl>
+    </workers>
+    <zookeeper>
+      <archive>zookeeper-3.4.6.tar.gz</archive>
+      <hosts>node001,node002,node003</hosts>
+      <clientport>2181</clientport>
+      <serverport>2888</serverport>
+      <electionport>3888</electionport>
+    </zookeeper>
+  </instance>
+</sparkConfig>
