@@ -57,6 +57,8 @@ and everything you can do with the simple specification of `elastic_call`:
 * make an argument explicitly empty if not interesting. so, `search query` empty means it is
 no search,  `json document` is no `PUT` (`GET` therefore). the meaning for empty of other
 is currently a WIP, so, don't trust the current behaviour, that they simply get empty.
+* learn the search syntax at https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
+
 
 
 Note: Scrolling not yet supported. It will always query for  `999999999` records, change source code if that's not OK 
