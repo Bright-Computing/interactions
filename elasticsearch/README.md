@@ -21,8 +21,8 @@ still doesn't have proper search powers, and `interaction.json` can grow big
 very quickly, it may be handy to have an `Elasticsearch` cluster set for
 searching in the contents of that file `interaction.json`.
 
-But in the end, `interactionselastic.rb` is 1) a tool that can be used for exporting all
-the objects in a `json` file to an `Elasticsearch` cluster, with:
+But in the end, **`interactionselastic.rb` is 1) a tool that can be used for exporting all
+the objects in a `json` file to an `Elasticsearch` cluster**, with:
 
 ```
 ruby interactionselastic.rb populate_json_elastic_call  "http://localhost:9200" "index_of_mine" "interactions"  "http://url_to/interactions.json" | tee output.json
@@ -33,8 +33,8 @@ using the `populate_json_elastic_call` specification:
 
 
 
-2) But also, `interactionselastic.rb` is a tool to interface with `Elasticsearch`,
-so then you can do things like, creating a document ...
+2) But also, `interactionselastic.rb` is **a tool to interface with `Elasticsearch`,
+so then you can do things like, creating a document** ...
 
 ```
 ruby interactionselastic.rb elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "interaction_name" "" '{"key": "value" }'
