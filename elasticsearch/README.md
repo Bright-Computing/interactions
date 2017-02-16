@@ -14,18 +14,18 @@ Copyright 2017 Bright Computing Holding BV.
    limitations under the License.
 -->
 
-# elastic
+# interactionselastic.rb
 It is a tool initiated with the intent of exporting the `interactions` from an
 `interaction.json` file into an `Elasticsearch` cluster. Since `interaction.rb`
 still doesn't have proper search powers, and `interaction.json` can grow big
 very quickly, it may be handy to have an `Elasticsearch` cluster set for
 searching in the contents of that file `interaction.json`.
 
-But in the end, `elastic.rb` is 1) a tool that can be used for exporting all
+But in the end, `interactionselastic.rb` is 1) a tool that can be used for exporting all
 the objects in a `json` file to an `Elasticsearch` cluster, with:
 
 ```
-ruby elastic.rb populate_json_elastic_call  "http://localhost:9200" "index_of_mine" "interactions"  "http://url_to/interactions.json" | tee output.json
+ruby interactionselastic.rb populate_json_elastic_call  "http://localhost:9200" "index_of_mine" "interactions"  "http://url_to/interactions.json" | tee output.json
 ```
 using the `populate_json_elastic_call` specification:
 * it always take 5 parameters: `elasticsearch host:port`, `index name`, 
@@ -33,23 +33,23 @@ using the `populate_json_elastic_call` specification:
 
 
 
-2) But also, `elastic.rb` is a tool to interface with `Elasticsearch`,
+2) But also, `interactionselastic.rb` is a tool to interface with `Elasticsearch`,
 so then you can do things like, creating a document ...
 
 ```
-ruby elastic.rb elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "interaction_name" "" '{"key": "value" }'
+ruby interactionselastic.rb elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "interaction_name" "" '{"key": "value" }'
 ```
 ... getting that document ...
 ```
-ruby elastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "interaction_name" "" ''
+ruby interactionselastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "interaction_name" "" ''
 ```
 ... getting all `key:value` from a mapping ...
 ```
-ruby  elastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "" "*:*" '' | tee output.json
+ruby  interactionselastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "" "*:*" '' | tee output.json
 ```
 ... searching for a `key:value` (or any valid query, including changing `index_of_mine` by `_all`) ...
 ```
-ruby  elastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "" "key:value" ''
+ruby  interactionselastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "" "key:value" ''
 ```
 and everything you can do with the simple specification of `elastic_call`:
 * it always take 6 parameters: `elasticsearch host:port`, `index name`, `mapping name`,
@@ -64,5 +64,4 @@ Note: Scrolling not yet supported. It will always query for  `999999999` records
 
 
 `STDOUT` Ouput is `JSON`, some garbage hard to parse may be output to the `STDERR`.
-
 
