@@ -28,7 +28,7 @@ the objects in a `json` file to an `Elasticsearch` cluster, with:
 ruby interactionselastic.rb populate_json_elastic_call  "http://localhost:9200" "index_of_mine" "interactions"  "http://url_to/interactions.json" | tee output.json
 ```
 using the `populate_json_elastic_call` specification:
-* it always take 5 parameters: `elasticsearch host:port`, `index name`, 
+* it always takes 5 parameters: `elasticsearch host:port`, `index name`, 
 `document name`, `json path or url`
 
 
@@ -52,7 +52,7 @@ ruby  interactionselastic.rb  elastic_call  "http://localhost:9200" "index_of_mi
 ruby  interactionselastic.rb  elastic_call  "http://localhost:9200" "index_of_mine" "interactions" "" "key:value" ''
 ```
 and everything you can do with the simple specification of `elastic_call`:
-* it always take 6 parameters: `elasticsearch host:port`, `index name`, `mapping name`,
+* it always takes 6 parameters: `elasticsearch host:port`, `index name`, `mapping name`,
 `document name`, `search query`, `json document`
 * make an argument explicitly empty if not interesting. so, `search query` empty means it is
 no search,  `json document` is no `PUT` (`GET` therefore). the meaning for empty of other
