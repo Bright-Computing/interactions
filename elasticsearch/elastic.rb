@@ -96,15 +96,3 @@ end
 
 main
 
-=begin
-c = Curl::Easy.http_get("#{url}/#{index_name}/#{mapping_name}/comment")
-c.http_auth_types = :basic
-c.username = username
-c.password = password
-c.perform
-#  amount of comments currently on that issue:
-total = ((JSON.parse c.body_str).fetch "total")
-
-p "... Response:"
-pp (JSON.parse c.body_str)
-=end
