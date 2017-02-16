@@ -40,19 +40,18 @@ def elastic_call args = ARGV
   json_doc = args.shift ||  readlines.join
   STDERR.puts
 
-  query  = (query.length > 0) && ("_search?q=#{query}&pretty=true") || query
+  query  = (query.length > 0) && ("_search?q=#{query}&pretty=true&size=999999999") || query
   index_name = CGI.escape index_name
   mapping_name = CGI.escape mapping_name
   document_name = CGI.escape document_name
-  puts document_name
   # query = CGI.escape query
   uri = "#{url}/#{index_name}/#{mapping_name}/#{document_name}/#{query}"
   c = begin
       JSON.parse json_doc
-      puts "curl -XPUT \"#{uri}\" -d \"#{json_doc}\""
+      STDERR.puts "curl -XPUT \"#{uri}\" -d \"#{json_doc}\""
       Curl::Easy.http_put uri, json_doc
     rescue
-      puts "curl -XGET \"#{uri}\""
+      STDERR.puts "curl -XGET \"#{uri}\""
       Curl::Easy.http_get uri
   end
 =begin
@@ -73,6 +72,8 @@ def populate_json_elastic_call args = ARGV
   url = args.shift || gets.chomp
   STDERR.print "index_name:" 
   index_name = args.shift || gets.chomp
+  STDERR.print "mapping_name:" 
+  mapping_name = args.shift || gets.chomp
   STDERR.print "json_uri:" 
   json_uri = args.shift || gets.chomp
   json_obj = begin
@@ -82,8 +83,8 @@ def populate_json_elastic_call args = ARGV
   end
   {
     "populate_json_elastic_call" => json_obj.map { |k, v|
-       p k
-       elastic_call [url, index_name, (File.basename json_uri), k, '',  {k => v}.to_json]
+       STDERR.puts k
+       elastic_call [url, index_name, mapping_name, k, '',  {k => v}.to_json]
     }
   }
 end
@@ -91,7 +92,7 @@ end
 def main args = ARGV
   STDERR.print "action [elastic_call, populate_json_elastic_call]:" 
   action = args.shift || gets.chomp
-  pp method(action).call 
+  puts JSON.pretty_generate method(action).call 
 end
 
 main
