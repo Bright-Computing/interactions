@@ -61,7 +61,7 @@ is currently a WIP, so, don't trust the current behaviour, that they simply get 
 
 
 
-Note: Scrolling not yet supported. It will always query for  `999999999` records, change source code if that's not OK 
+Note: Scrolling not yet supported. It will always queries for  `999999999` records, change source code if that's not OK 
 (be aware that `Elasticsearch` may not accept a bigger one).
 
 
