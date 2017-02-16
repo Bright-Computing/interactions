@@ -65,3 +65,17 @@ Note: Scrolling not yet supported. It will always query for  `999999999` records
 
 `STDOUT` Ouput is `JSON`, some garbage hard to parse may be output to the `STDERR`.
 
+
+Requisites
+----------
+Ensure these gems are available:
+```
+require "json"
+require "pp"
+require "io/console"
+require 'webrick'
+require 'stringio'
+require 'open-uri'
+require 'curb'
+require 'cgi'
+```
