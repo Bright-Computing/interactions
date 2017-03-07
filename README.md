@@ -15,7 +15,86 @@ Copyright 2017 Bright Computing Holding BV.
 -->
 
 # interactions
-Tool for automatizing the generation of scripts
+`interactions.rb` is a tool for automatizing the generation of scripts (currently only
+bash), and executing combinations of them. Each of those combinations are called
+`interactions`.
+
+`interactions.rb`, although a general purpose tool, designed to generate any kind of text streams (or
+scripts) to be executed by any processor callable in ruby (although currently tested only in bash),
+was started for keeping up with the growing combinations of tools that can be installed and managed
+using the big data plugin of Bright Cluster Manager. We needed a tool where we could describe complex
+test cases as self descriptive as:
+
+```
+  "multiple_bigdata_tools_test" : {
+    "interactions": [
+      "comment:clean up eventual test run before this",
+      "multiple_bigdata_tools_test_cleanup",
+
+      "comment:install hadoop instance, having 2.7.1 version number, removing it before if needed",
+      "hadoop271_nohb_nozk_instance","bigdata_instance_install",
+
+      "comment:install tools on that instance; the first has to be zookeeper or tools like hbase won't work",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_install",
+      "set_hive_basic_ensemble","hive_metastore_setup", "apache-hive-1.2.1-bin.tar.gz","tool_install",
+      "set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_install",
+      "set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_install",
+      "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_install",
+
+      "comment:sed the service files to simulate that they're written without the symlinky technique",
+      "bigdata_update_service_files_using_defaults",
+
+      "comment:test tools on that instance",
+      "spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+      "comment:update the tools on that instance to a newer version",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.8.tar.gz","tool_update",
+      "set_hive_basic_ensemble","apache-hive-2.1.1-bin.tar.gz","tool_update",
+      "set_hbase_basic_ensemble","hbase-1.3.0-bin.tar.gz","tool_update",
+      "set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+      "set_pig_basic_ensemble","pig-0.16.0.tar.gz","tool_update",
+
+      "comment:test updated tools on that instance",
+      "spark-1.6.0-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+      "comment:simulate failure to upgrade the hadoop instance to 2.7.2",
+      "node001","simulate:make_hadoop_non_upgradable_reversible",
+      "hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+      "node001","simulate:make_hadoop_non_upgradable_revert",
+      "hadoop-2.7.1","interactions.rb","hadoop_wordcount_example",
+
+      "comment:succeed to upgrade the hadoop instance to 2.7.2",
+      "hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+      "hadoop-2.7.2","interactions.rb","hadoop_wordcount_example",
+
+      "comment:update the tools on that instance to an older version",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_update",
+      "set_hive_basic_ensemble","apache-hive-1.2.1-bin.tar.gz","tool_update",
+      "set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_update",
+      "set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_update",
+      "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_update",
+
+      "comment:test updated tools on that instance",
+      "spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+      "comment:test Spark instance, test, update, test again",
+
+      "sparkStandalone_instance","bigdata_instance_install","spark_example_pi_1","spark_submit_job",
+      "set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+      "spark_example_pi_1","spark_submit_job",
+
+      "unsed"
+    ],
+    "comment": ""
+  },
+```
+and be able to run in parallel variations of those tests (e.g: we can remove the block that simulates
+failure of a Hadoop upgrade, or make it fail again) in our multi cluster infrastructure.
+
+
+Any heavy user of scripting can start creating today their interactions, and soon benefit from the time
+automation can save you.
+
 
 Requisites
 ----------
@@ -62,8 +141,9 @@ If you open the file `interactions.json` you see that they're defined just by a 
   },
 ```
 
-But they give an idea of what `interactions` are about. `interactions`, although a general purpose tool,
-was started for testing the big data plugin of Bright Cluster Manager. A simple `interactions` execution
+But they give an idea of what `interactions` are about. 
+
+A simple `interactions` execution
 that does something more concrete is:
 
 ```
