@@ -104,7 +104,7 @@ because  `hadoop_instance_install` is somehow defined to react to the definition
 This way onwards, it is possible to, departing from a very naive interaction (ie, basically hardcoded script)
 to grow and build more trustworthy interactions (that will react on things previously defined). The `hadoop271_nohb_nozk_instance`, when first coded, didn't, a priori downloaded the needed files. It would require a `file_download` interaction to be called after its definition. But, since they're are required dependencies, the interactions were improved to make it try to download that file (if the file exists, it won't override it). At some point, it was introduced a interaction that blocks the terminal while the nodes aren't UP. Before, if a node was rebooting, the `hadoop_instance_install`  would certainly not produce its defined effect -- to install a hadoop instance.
 
-Defining Interactions - Composite Pattern and how we use them for Regression Tests:
+Defining Interactions
 ----------
 
 Let's have a look at the **definition of the interaction `hadoop271_nohb_nozk_instance`**:
@@ -133,7 +133,7 @@ Running `hadoop-2.7.1.tar.gz` is equivalent of running `file_download` and `hado
 
 
 
-Running `file_download` is equivalent of running a command that reacts on the `download_url`  property being set:
+Running `file_download` is equivalent of running a command that reacts on the `download_url` and `filename`  properties being set:
 ```
   "file_download": {
     "command": [
@@ -234,7 +234,10 @@ wget -nv -c "https://raw.githubusercontent.com/Bright-Computing/interactions/mas
 ```
 But, this time `cm-hadoop-setup` knows which  use as parameter, because the `filename` property was set by `hadoop-2.7.1.tar.gz` and later overridden by `hadoop-2.7.1-no_hbase_no_zk.xml`.
 
-An interaction can be defined in terms of other interactions, following the composite design pattern, and that allow sequences of interactions to be easily added, making life easier for growing the complexity of tests. E.g, have a look on the interaction `multiple_bigdata_tools_test`, composed of 44 other interactions:
+Composite Pattern and how we use them for Regression Tests:
+----------
+
+As saw in the previous section, an interaction can be defined in terms of other interactions, following the composite design pattern, and that allow sequences of interactions to be easily added, making life easier for growing the complexity of tests. E.g, have a look on the interaction `multiple_bigdata_tools_test`, composed of 44 other interactions:
 ```
   "multiple_bigdata_tools_test" : {
     "interactions": [
