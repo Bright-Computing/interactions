@@ -70,7 +70,12 @@ that does something more concrete is:
 ruby  interactions.rb -i hadoop271_nohb_nozk_instance,hadoop_instance_install -d live,warning
 ```
 
-It installs installs the `hadoop271_nohb_nozk` instance, as a hadoop instance (downloading the xml file defined as `download_url` and renaming it as `filename`), using the `cm-hadoop-setup` reacheable in the system's `PATH`.
+That execution is comprised of 2 interactions: `hadoop271_nohb_nozk_instance` and `hadoop_instance_install`.
+The first one is defined in terms of what a user has to decided or get to install a Hadoop instance:
+a xml file layouting the cluster, the Hadoop tarball, and the name they want to give the instance (in the 
+next section we show how to define that interaction, here only what it does). `hadoop_instance_install`
+installs the hadoop instance assuming some things are defined (e.g, those defined by `hadoop271_nohb_nozk_instance`).
+
 
 After calculating the dependencies and execution tree, `interactions.rb` generates and executes the below script
 to achieve the defined effect:
