@@ -71,7 +71,7 @@ ruby  interactions.rb -i hadoop271_nohb_nozk_instance,hadoop_instance_install -d
 ```
 
 That execution is comprised of 2 interactions: `hadoop271_nohb_nozk_instance` and `hadoop_instance_install`.
-The first one is defined in terms of what a user has to decided or get to install a Hadoop instance:
+The first one is defined in terms of what a user has to decide or get to install a Hadoop instance:
 a xml file layouting the cluster, the Hadoop tarball, and the name they want to give the instance (in the 
 next section we show how to define that interaction, here only what it does). `hadoop_instance_install`
 installs the hadoop instance assuming some things are defined (e.g, those defined by `hadoop271_nohb_nozk_instance`).
@@ -99,9 +99,10 @@ wget -nv -c "https://raw.githubusercontent.com/Bright-Computing/interactions/mas
 "/root/"""cm-hadoop-setup -c "hadoop-2.7.1-no_hbase_no_zk.xml"
 ```
 
-because  `hadoop_instance_install` is somehow defined to react to the definition of the property `setup_script_path_prefix` -- which `prefix=/root/` defines. Other interactions, like `pwd` or `date` -- just literals, are still very naive.
+because  `hadoop_instance_install` is somehow defined to react to the definition of a property which `prefix=/root/` defines (`setup_script_path_prefix`, in this case) . Other interactions, like `pwd` or `date` -- just literals, are not defined to react on the same property -- they are kind of "naive" interactions.
 
-This way onwards, it is possible to, departing from a very naive interaction (ie, basically hardcoded thing) to grow and build more trustworthy interactions (that will react on things previously defined). The `hadoop271_nohb_nozk_instance`, when first coded, didn't, a priori downloaded the needed files. It would require a `file_download` interaction to be called after its definition. But, since they're are required dependencies, the interactions were improved to make it try to download that file (if the file exists, it won't override it). At some point, it was introduced a interaction that blocks the terminal while the nodes aren't UP. Before, if a node was rebooting, the `hadoop_instance_install`  would certainly not produce its defined effect -- to install a hadoop instance.
+This way onwards, it is possible to, departing from a very naive interaction (ie, basically hardcoded script)
+to grow and build more trustworthy interactions (that will react on things previously defined). The `hadoop271_nohb_nozk_instance`, when first coded, didn't, a priori downloaded the needed files. It would require a `file_download` interaction to be called after its definition. But, since they're are required dependencies, the interactions were improved to make it try to download that file (if the file exists, it won't override it). At some point, it was introduced a interaction that blocks the terminal while the nodes aren't UP. Before, if a node was rebooting, the `hadoop_instance_install`  would certainly not produce its defined effect -- to install a hadoop instance.
 
 Defining Interactions - Composite Pattern and how we use them for Regression Tests:
 ----------
