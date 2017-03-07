@@ -107,7 +107,7 @@ to grow and build more trustworthy interactions (that will react on things previ
 Defining Interactions - Composite Pattern and how we use them for Regression Tests:
 ----------
 
-Let's have a look at **definition of the interaction `hadoop271_nohb_nozk_instance`**:
+Let's have a look at the **definition of the interaction `hadoop271_nohb_nozk_instance`**:
 ```
   "hadoop271_nohb_nozk_instance" : {
     "instance_name"               : "hadoop271_nohb_nozk",
@@ -116,7 +116,7 @@ Let's have a look at **definition of the interaction `hadoop271_nohb_nozk_instan
   },
 ```
 
-That means that, **running `hadoop271_nohb_nozk_instance` is equivalent of running the sequence `hadoop-2.7.1.tar.gz,hadoop-2.7.1-no_hbase_no_zk.xml,hadoop_bigdata_instance` with the property `instance_name` set to `hadoop271_nohb_nozk`**.
+That means that, **running `hadoop271_nohb_nozk_instance` is equivalent of running the sequence `hadoop-2.7.1.tar.gz,hadoop-2.7.1-no_hbase_no_zk.xml,hadoop_bigdata_instance`**  with the property `instance_name` set to `"hadoop271_nohb_nozk"`.
 
 Running `hadoop-2.7.1.tar.gz` is equivalent of running `file_download` and `hadoop-2.7.1`, with some more properties set:
 
