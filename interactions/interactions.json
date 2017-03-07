@@ -1,0 +1,4616 @@
+
+
+
+
+{
+  "root": {
+    "comment"                     : "root object, leave empty"
+  },
+  "current": {
+    "comment"                     : "computed object, leave empty"
+  },
+  "file_download": {
+    "command": [
+      { "literal"      : "wget -nv -c " },
+      { "replaceQuoted": "download_url" },
+      { "literal"      : " --output-document=" },
+      { "replaceQuoted": "filename" }
+    ]
+  },
+  "clean_file_download": {
+    "command": [
+      { "literal"      : "rm -rf " },
+      { "replaceQuoted": "filename" },
+      { "literal"      : " ; wget -nv -c " },
+      { "replaceQuoted": "download_url" },
+      { "literal"      : " --output-document=" },
+      { "replaceQuoted": "filename" }
+    ]
+  },
+  "df": {
+    "command": [
+      { "literal"      : "df " }
+    ]
+  },
+  "date": {
+    "command": [
+      { "literal"      : "date " }
+    ]
+  },
+  "pwd": {
+    "command": [
+      { "literal"      : "pwd " }
+    ]
+  },
+  "enter_workdir": {
+    "command": [
+      { "literal"      : "cd " },
+      { "replaceQuoted": "workdir_prefix" },
+      { "replaceQuoted": "workdir" },
+      { "literal"      : "" }
+    ]
+  },
+  "mysql_grant_access": {
+    "command": [
+      { "literal"      : "mysql -u" },
+      { "replace"      : "mysql_user" },
+      { "literal"      : " -p" },
+      { "replace"      : "mysql_pw" },
+      { "literal"      : " -e " },
+      { "literal"      : "\"" },
+      { "literal"      : " GRANT ALL PRIVILEGES ON "},
+      { "replace"      : "mysql_db" },
+      { "literal"      : ".* TO '" },
+      { "replace"      : "mysql_grant_user" },
+      { "literal"      : "'@'%'\ IDENTIFIED BY '"},
+      { "replace"      : "mysql_grant_pw" },
+      { "literal"      : "'; FLUSH PRIVILEGES ;" },
+      { "literal"      : "\"" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "mysql_drop_db": {
+    "command": [
+      { "literal"      : "mysql -u" },
+      { "replace"      : "mysql_user" },
+      { "literal"      : " -p" },
+      { "replace"      : "mysql_pw" },
+      { "literal"      : " -e " },
+      { "literal"      : "\"" },
+      { "literal"      : " DROP DATABASE IF EXISTS "},
+      { "replace"      : "mysql_db" },
+      { "literal"      : ";" },
+      { "literal"      : "\"" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "shell_program_servicename_action": {
+    "command": [
+      { "replace"      : "shell_program" },
+      { "literal"      : " " },
+      { "replace"      : "servicename" },
+      { "literal"      : " " },
+      { "replace"      : "action" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "command_namespace_toolname": {
+    "command": [
+      { "replace"      : "shell_command" },
+      { "replace"      : "before_namespace" },
+      { "replace"      : "namespace" },
+      { "replace"      : "between_namespace_toolname" },
+      { "replace"      : "toolname" },
+      { "replace"      : "after_namespace_toolname" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "/var/log/cm_namespace_-toolname-setup.log": {
+    "before_namespace"            : "/var/log/cm",
+    "between_namespace_toolname"  : "-",
+    "after_namespace_toolname"    : "-setup.log",
+    "interactions" : ["command_namespace_toolname"],
+    "comment"                     : ""
+  },
+  "set_tail_f_command": {
+    "shell_command"                     : "tail -f ",
+    "comment"                     : ""
+  },
+  "set_vim_command": {
+    "shell_command"                     : "vim -p ",
+    "comment"                     : ""
+  },
+  "while_command": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "literal"      : "while [ \"" },
+      { "replace"      : "while_actual_value" },
+      { "literal"      : "\" != \"" },
+      { "replace"      : "while_expected_value" },
+      { "literal"      : "\" ] ; do" },
+      { "literal"      : " " },
+      { "replace"      : "while_body" },
+      { "literal"      : " " },
+      { "literal"      : "; " },
+      { "literal"      : "done" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "for_command": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "literal"      : "for i in " },
+      { "replace"      : "for_list_prepare_before" },
+      { "replace"      : "for_list" },
+      { "replace"      : "for_list_prepare_after" },
+      { "literal"      : " ; do" },
+      { "literal"      : " " },
+      { "replace"      : "for_body_before_iterator" },
+      { "literal"      : "${i}" },
+      { "replace"      : "for_body_after_iterator_1" },
+      { "replace"      : "for_body_after_iterator_2" },
+      { "replace"      : "for_body_after_iterator_3" },
+      { "replace"      : "for_body_after_iterator_last" },
+      { "literal"      : "; " },
+      { "literal"      : "done" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "rss-hadoop21BtrunkDCENTOS6u5FHxlNxl": {
+    "for_list"                               : "rss-hadoop21BtrunkDCENTOS6u5FHxlNxl",
+    "comment"      : ""
+  },
+  "rss-hadoop25B73devDSLES11sp4FHxlNxl": {
+    "for_list"                               : "rss-hadoop25B73devDSLES11sp4FHxlNxl",
+    "comment"      : ""
+  },
+  "rss-hadoop26BtrunkDCENTOS7u1FHxlNxl_": {
+    "for_list"                               : "rss-hadoop26BtrunkDCENTOS7u1FHxlNxl_",
+    "comment"      : "will apply only to computenodes, not to headnode"
+  },
+  "rss-hadoop26BtrunkDCENTOS7u1FHxlNxl": {
+    "for_list"                               : "rss-hadoop26BtrunkDCENTOS7u1FHxlNxl",
+    "comment"      : ""
+  },
+  "rss-hadoop28BtrunkDSLES11sp4FHxlNxl_": {
+    "for_list"                               : "rss-hadoop28BtrunkDSLES11sp4FHxlNxl",
+    "comment"      : "will apply only to computenodes, not to headnode"
+  },
+  "rss-hadoop28BtrunkDSLES11sp4FHxlNxl": {
+    "for_list"                               : "rss-hadoop28BtrunkDSLES11sp4FHxlNxl",
+    "comment"      : ""
+  },
+  "openstack_server": {
+    "for_body_after_iterator_2"              : " server ",
+    "comment"      : ""
+  },
+  "openstack_server_list": {
+    "for_body_after_iterator_3"              : " list | grep ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_unshelve": {
+    "for_body_after_iterator_3"              : " unshelve ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_shelve": {
+    "for_body_after_iterator_3"              : " shelve ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_start": {
+    "for_body_after_iterator_3"              : " start ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_reboot": {
+    "for_body_after_iterator_3"              : " reboot ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_resetstate": {
+    "for_body_after_iterator_3"              : " resetstate ",
+    "interactions" : ["openstack_server"],
+    "comment"      : ""
+  },
+  "openstack_server_reboot_hard": {
+    "for_body_after_iterator_4"              : " --hard ",
+    "interactions" : ["openstack_server_reboot"],
+    "comment"      : ""
+  },
+  "openstack_for_command": {
+    "for_list_prepare_before"                : "$(openstack server list | grep ",
+    "for_list_prepare_after"                 : "| cut -f 2 -d \\| ) ",
+    "for_body_before_iterator"               : "it=",
+    "for_body_after_iterator_1"              : "; echo $it ; openstack ",
+    "for_body_after_iterator_last"           : " $it ",
+    "interactions" : ["for_command"],
+    "comment"      : "this interaction is set to be changed in the near future, don't trust its behaviour."
+  },
+  "heanode_cod.xlarge": {
+    "cluster_flavour_headnode"               : "cod.xlarge",
+    "cluster_flavour_headnode_short"         : "Hxl",
+    "comment"      : ""
+  },
+  "computenodes_cod.xlarge": {
+    "cluster_flavour_computenodes"           : "cod.xlarge",
+    "cluster_flavour_computenodes_short"     : "Nxl",
+    "comment"      : ""
+  },
+  "computenodes_cod.large": {
+    "cluster_flavour_computenodes"           : "cod.large",
+    "cluster_flavour_computenodes_short"     : "Nl",
+    "comment"      : ""
+  },
+  "centos7u2": {
+    "distro"                                 : "centos7u2",
+    "comment"      : ""
+  },
+  "centos7u1": {
+    "distro"                                 : "centos7u1",
+    "comment"      : ""
+  },
+  "5_nodes": {
+    "number_of_nodes"                        : "5",
+    "comment"      : ""
+  },
+  "8_nodes": {
+    "number_of_nodes"                        : "8",
+    "comment"      : ""
+  },
+  "trunk_branch": {
+    "branch"                                 : "trunk",
+    "comment"      : ""
+  },
+  "7.3-dev_branch": {
+    "branch"                                 : "7.3-dev",
+    "comment"      : ""
+  },
+  "headnode_disk_60GB": {
+    "headnode_volume_in_GB"                  : "60",
+    "comment"      : ""
+  },
+  "headnode_disk_40GB": {
+    "headnode_volume_in_GB"                  : "40",
+    "comment"      : ""
+  },
+  "computenodes_disk_25GB": {
+    "computenodes_volume_in_GB"              : "25",
+    "comment"      : ""
+  },
+  "hadoop_cluster_purpose": {
+    "cluster_purpose"                        : "hadoop",
+    "comment"      : ""
+  },
+  "command_cod": {
+    "top_command"                             : "cod",
+    "comment"      : ""
+  },
+  "sub_command_1_cluster": {
+    "sub_command_1"                          : "cluster",
+    "comment"      : ""
+  },
+  "sub_command_2_-n": {
+    "sub_command_2"                          : "-n",
+    "comment"      : ""
+  },
+  "sub_command_3_version": {
+    "sub_command_3"                          : "--version",
+    "comment"      : ""
+  },
+  "sub_command_4_distro": {
+    "sub_command_4"                          : "--distro",
+    "comment"      : ""
+  },
+  "sub_command_5_image_headnode": {
+    "sub_command_5"                          : "--head-node-type",
+    "comment"      : ""
+  },
+  "sub_command_6_image_computenodes": {
+    "sub_command_6"                          : "--node-type",
+    "comment"      : ""
+  },
+  "sub_command_7_headnode_size": {
+    "sub_command_7"                          : "--head-node-root-volume-size",
+    "comment"      : ""
+  },
+  "sub_command_8_computenodes_size": {
+    "sub_command_8"                          : "--node-root-volume-size",
+    "comment"      : ""
+  },
+  "sub_command_9_-y": {
+    "sub_command_9"                          : "-y",
+    "comment"      : ""
+  },
+  "command_empty": {
+    "command"                                : "",
+    "comment"      : ""
+  },
+  "sub_command_1_empty": {
+    "sub_command_1"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_2_empty": {
+    "sub_command_2"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_3_empty": {
+    "sub_command_3"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_4_empty": {
+    "sub_command_4"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_5_empty": {
+    "sub_command_5"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_6_empty": {
+    "sub_command_6"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_7_empty": {
+    "sub_command_7"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_8_empty": {
+    "sub_command_8"                          : "",
+    "comment"      : ""
+  },
+  "sub_command_9_empty": {
+    "sub_command_9"                          : "",
+    "comment"      : ""
+  },
+  "cluster_command" : {
+    "command": [
+      { "literal"      : "" },
+      { "replace"      : "top_command" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_1" },
+      { "literal"      : " " },
+      { "replace"      : "action" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_2" },
+      { "literal"      : " " },
+      { "replace"      : "number_of_nodes" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_3" },
+      { "literal"      : " " },
+      { "replace"      : "branch" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_4" },
+      { "literal"      : " " },
+      { "replace"      : "distro" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_5" },
+      { "literal"      : " " },
+      { "replace"      : "cluster_flavour_headnode" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_6" },
+      { "literal"      : " " },
+      { "replace"      : "cluster_flavour_computenodes" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_7" },
+      { "literal"      : " " },
+      { "replace"      : "headnode_volume_in_GB" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_8" },
+      { "literal"      : " " },
+      { "replace"      : "computenodes_volume_in_GB" },
+      { "literal"      : " " },
+      { "replace"      : "cluster_purpose" },
+      { "replace"      : "cluster_number" },
+      { "replace"      : "cluster_flavour_headnode_short" },
+      { "replace"      : "cluster_flavour_computenodes_short" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_9" },
+      { "literal"      : "" }
+    ],
+    "comment"      : "modern_design, branch is the command line option --version"
+  },
+  "cluster_command_2" : {
+    "command": [
+      { "literal"      : "" },
+      { "replace"      : "top_command" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_1" },
+      { "literal"      : " " },
+      { "replace"      : "action" },
+      { "literal"      : " " },
+      { "replace"      : "for_list" },
+      { "literal"      : " " },
+      { "replace"      : "sub_command_9" },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "cluster_create_defaults": {
+    "computenodes_volume_in_GB"              : "25",
+    "headnode_volume_in_GB"                  : "25",
+    "interactions" : [
+			""
+		     ],
+    "comment"      : ""
+  },
+  "standard_hadoop_centos7u2_7.3-dev_cluster": {
+    "interactions" : [
+			"cluster_create_defaults",
+			"heanode_cod.xlarge",
+			"computenodes_cod.xlarge",
+			"centos7u2",
+			"5_nodes",
+			"7.3-dev_branch",
+			"headnode_disk_60GB",
+			"computenodes_disk_25GB",
+			"hadoop_cluster_purpose",
+			""
+		     ],
+    "comment"      : ""
+  },
+  "standard_hadoop_centos7u2_7.3-dev_cluster_large_nodes": {
+    "interactions" : [
+			"cluster_create_defaults",
+			"heanode_cod.xlarge",
+			"computenodes_cod.large",
+			"centos7u2",
+			"5_nodes",
+			"7.3-dev_branch",
+			"headnode_disk_60GB",
+			"computenodes_disk_25GB",
+			"hadoop_cluster_purpose",
+			""
+		     ],
+    "comment"      : ""
+  },
+  "standard_hadoop_centos7u2_trunk_cluster": {
+    "interactions" : [
+			"cluster_create_defaults",
+			"heanode_cod.xlarge",
+			"computenodes_cod.xlarge",
+			"centos7u2",
+			"5_nodes",
+			"trunk_branch",
+			"headnode_disk_60GB",
+			"computenodes_disk_25GB",
+			"hadoop_cluster_purpose",
+			""
+		     ],
+    "comment"      : ""
+  },
+  "sample_cluster_29": {
+    "for_list"                               : "rss-c-10-31-t-c7u2-hadoop29HxlNxl",
+    "cluster_number"                         : "29",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "rss-c-10-31-t-c7u2-hadoop30HxlNxl": {
+    "for_list"                               : "rss-c-10-31-t-c7u2-hadoop30HxlNxl",
+    "cluster_number"                         : "30",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "rss-c-10-31-t-c7u2-hadoop30HxlNxl_": {
+    "for_list"                               : "rss-c-10-31-t-c7u2-hadoop30HxlNxl_",
+    "comment"      : ""
+  },
+  "rss-c-10-31-t-c7u2-hadoop31HxlNxl": {
+    "for_list"                               : "rss-c-10-31-t-c7u2-hadoop31HxlNxl",
+    "cluster_number"                         : "31",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "rss-c-10-31-t-c7u2-hadoop31HxlNxl_": {
+    "for_list"                               : "rss-c-10-31-t-c7u2-hadoop31HxlNxl_",
+    "comment"      : ""
+  },
+  "rss-c-12-01-t-c7u2-hadoop32HxlNxl": {
+    "for_list"                               : "rss-c-12-01-t-c7u2-hadoop32HxlNxl",
+    "headnode_ip"                            : "10.2.63.169",
+    "cluster_number"                         : "32",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "rss-c-12-01-t-c7u2-hadoop32HxlNxl_": {
+    "for_list"                               : "rss-c-12-01-t-c7u2-hadoop32HxlNxl_",
+    "comment"      : ""
+  },
+
+  "cluster_35": {
+    "for_list"                               : "rss-c-01-05-b73-dev-c7u2-hadoop35HxlNxl",
+    "headnode_ip"                            : "10.2.61.105",
+    "cluster_number"                         : "35",
+    "interactions" : [
+			"standard_hadoop_centos7u2_7.3-dev_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "cluster_35_": {
+    "for_list"                               : "rss-c-01-05-b73-dev-c7u2-hadoop35HxlNxl_",
+    "comment"      : ""
+  },
+  "rss-c-01-05-b73-dev-c7u2-hadoop35HxlNxl": {
+    "interactions" : [ "cluster_35" ],
+    "comment"      : "alias"
+  },
+  "rss-c-01-05-b73-dev-c7u2-hadoop35HxlNxl_": {
+    "interactions" : [ "cluster_35_" ],
+    "comment"      : "alias"
+  },
+
+  "cluster_36": {
+    "for_list"                               : "rss-c-01-18-b73-dev-c7u2-hadoop36HxlNl",
+    "headnode_ip"                            : "10.2.62.69",
+    "cluster_number"                         : "36",
+    "interactions" : [
+			"standard_hadoop_centos7u2_7.3-dev_cluster_large_nodes"
+		     ],
+    "comment"      : ""
+  },
+  "cluster_36_": {
+    "for_list"                               : "rss-c-01-18-b73-dev-c7u2-hadoop36HxlNl_",
+    "comment"      : ""
+  },
+  "rss-c-01-18-b73-dev-c7u2-hadoop36HxlNl": {
+    "interactions" : [ "cluster_36" ],
+    "comment"      : "alias"
+  },
+  "rss-c-01-18-b73-dev-c7u2-hadoop36HxlNl_": {
+    "interactions" : [ "cluster_36_" ],
+    "comment"      : "alias"
+  },
+
+  "cluster_37": {
+    "for_list"                               : "rss-c-02-14-t-c7u2-hadoop37HxlNxl",
+    "headnode_ip"                            : "10.2.61.20",
+    "cluster_number"                         : "37",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "cluster_37_": {
+    "for_list"                               : "rss-c-02-14-t-c7u2-hadoop37HxlNxl_",
+    "comment"      : ""
+  },
+  "rss-c-02-14-t-c7u2-hadoop37HxlNxl": {
+    "interactions" : [ "cluster_37" ],
+    "comment"      : "alias"
+  },
+  "rss-c-02-14-t-c7u2-hadoop37HxlNxl_": {
+    "interactions" : [ "cluster_37_" ],
+    "comment"      : "alias"
+  },
+
+  "cluster_39": {
+    "for_list"                               : "rss-c-02-23-t-c7u2-hadoop39HxlNxl",
+    "headnode_ip"                            : "10.2.62.72",
+    "cluster_number"                         : "39",
+    "interactions" : [
+			"standard_hadoop_centos7u2_trunk_cluster"
+		     ],
+    "comment"      : ""
+  },
+  "cluster_39_": {
+    "for_list"                               : "rss-c-02-23-t-c7u2-hadoop39HxlNxl_",
+    "comment"      : ""
+  },
+  "rss-c-02-23-t-c7u2-hadoop39HxlNxl": {
+    "interactions" : [ "cluster_39" ],
+    "comment"      : "alias"
+  },
+  "rss-c-02-23-t-c7u2-hadoop39HxlNxl_": {
+    "interactions" : [ "cluster_40_" ],
+    "comment"      : "alias"
+  },
+
+  "cluster_create": {
+    "interactions" : [
+			"sub_command_1_cluster", 
+			"create_action", 
+			"sub_command_2_-n", 
+			"sub_command_3_version", 
+			"sub_command_4_distro", 
+			"sub_command_5_image_headnode", 
+			"sub_command_6_image_computenodes", 
+			"sub_command_7_headnode_size", 
+			"sub_command_8_computenodes_size", 
+			"sub_command_9_-y", 
+			"cluster_command", 
+			""
+		     ],
+    "comment"      : ""
+  },
+  "cod_cluster_create": {
+    "interactions" : [
+			"command_cod", 
+			"cluster_create", 
+			""
+		     ],
+    "comment"      : ""
+  },
+  "cluster_delete": {
+    "interactions" : [
+			"sub_command_1_cluster", 
+			"delete_action", 
+			"sub_command_2_empty",
+			"sub_command_3_empty", 
+			"sub_command_4_empty", 
+			"sub_command_5_empty", 
+			"sub_command_6_empty", 
+			"sub_command_7_empty", 
+			"sub_command_8_empty", 
+			"sub_command_9_-y", 
+			"cluster_command_2", 
+			""
+		     ],
+    "comment"      : ""
+  },
+  "cod_cluster_delete": {
+    "interactions" : [
+			"command_cod", 
+			"cluster_delete", 
+			""
+		     ],
+    "comment"      : ""
+  },
+  "svn_get_branch_creation_revision" : {
+    "command": [
+      { "literal"      : "svn log -r  1:HEAD --limit 1 --stop-on-copy" },
+      { "replace"      : "repo_host_url" },
+      { "replace"      : "repository_name" },
+      { "literal"      : "/" },
+      { "replace"      : "destination_branch" },
+      { "literal"      : "/" },
+      { "replace"      : "path" },
+      { "literal"      : " | egrep -v '\\\-------' | while read l ; do  " },
+      { "literal"      : " echo $l  ; done  |  xargs echo" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "user_merge_list_on_repo" : {
+    "command": [
+      { "literal"      : "svn mergeinfo --show-revs eligible "},
+      { "replace"      : "repo_host_url" },
+      { "literal"      : "/" },
+      { "replace"      : "repository_name" },
+      { "literal"      : "/" },
+      { "replace"      : "source_branch" },
+      { "literal"      : "/" },
+      { "replace"      : "path" },
+      { "literal"      : " " },
+      { "replace"      : "repo_host_url" },
+      { "literal"      : "/" },
+      { "replace"      : "repository_name" },
+      { "literal"      : "/" },
+      { "replace"      : "destination_branch" },
+      { "literal"      : "/" },
+      { "replace"      : "path" },
+      { "literal"      : "  | cut -f 2 -dr  | while read l ; do  svn log -r $l | egrep \"" },
+      { "replace"      : "username" },
+      { "literal"      : "\"" },
+      { "literal"      : " " },
+      { "literal"      : " | egrep  \"\\|\"" },
+      { "literal"      : " | egrep \"" },
+      { "replace"      : "search_eregex" },
+      { "literal"      : "\"" },
+      { "literal"      : " " },
+      { "literal"      : " | cut -f 2 -dr | cut -f 1 -d' '  ; done  |  xargs echo" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "dev_machine": {
+    "repo_host_url": "svn://devel",
+    "comment"      : ""
+  },
+  "user_merge_list": {
+    "interactions" : ["dev_machine", "user_merge_list_on_repo"],
+    "comment"      : ""
+  },
+  "user_merge_list_current_repo" : {
+    "command": [
+      { "literal"      : "svn mergeinfo --show-revs eligible ^" },
+      { "literal"      : "/" },
+      { "replace"      : "source_branch" },
+      { "literal"      : "/" },
+      { "replace"      : "path" },
+      { "literal"      : " " },
+      { "literal"      : "^" },
+      { "literal"      : "/" },
+      { "replace"      : "destination_branch" },
+      { "literal"      : "/" },
+      { "replace"      : "path" },
+      { "literal"      : "  | cut -f 2 -dr  | while read l ; do  svn log -r $l | egrep \"" },
+      { "replace"      : "username" },
+      { "literal"      : "\"" },
+      { "literal"      : " " },
+      { "literal"      : " | egrep  \"\\|\"" },
+      { "literal"      : " | egrep \"" },
+      { "replace"      : "search_eregex" },
+      { "literal"      : "\"" },
+      { "literal"      : " " },
+      { "literal"      : " | cut -f 2 -dr | cut -f 1 -d' '  ; done  |  xargs echo" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : "svn mergeinfo --show-revs eligible ^/trunk ^/branches/7.3/ --username=ribamar  | cut -f 2 -dr  | while read l ; do  svn log -r $l | grep ribamar | cut -f 2 -dr | cut -f 1 -d' '  ; done  |  xargs echo"
+  },
+  "user_merge_list_current_repo": {
+    "repo_host_url"  : "^",
+    "repository_name": "",
+    "interactions"   : ["user_merge_list_on_repo"],
+    "comment"        : ""
+  },
+  "sample_eregex_search": {
+    "search_eregex": "my changes",
+    "comment"      : ""
+  },
+  "ribamar": {
+    "username"     : "ribamar",
+    "comment"      : ""
+  },
+  "cluster-tools": {
+    "repository_name" : "cluster-tools",
+    "comment"      : ""
+  },
+  "trunk_to_7.3": {
+    "source_branch": "trunk",
+    "destination_branch" : "branches/7.3",
+    "comment"      : ""
+  },
+  "hadoopcommon.py_code_runner_for_instance": {
+    "command": [
+      { "literal"      : "echo \"import sys ; sys.path.append('" },
+      { "replace"      : "bigdata_python_includedir_prefix" },
+      { "replace"      : "bigdata_python_includedir" },
+      { "literal"      : "') ; import hadoopdefaults ; import hadoopcommon ; import time ; import cmutils ; " },
+      { "replace"      : "hadoopcommon.py_code_before" },
+      { "replace"      : "instance_name" },
+      { "replace"      : "hadoopcommon.py_code_middle" },
+      { "replace"      : "hadoopcommon_role_list" },
+      { "replace"      : "hadoopcommon.py_code_after" },
+      { "replace"      : "toolname" },
+      { "replace"      : "hadoopcommon.py_code_after_tool" },
+      { "literal"      : "\" | python " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_get_role_nodes": {
+    "hadoopcommon.py_code_before"            : "print hadoopcommon.stringifyEach(hadoopcommon.getAllNodes(hadoopcommon.getCluster(), '",
+    "hadoopcommon.py_code_middle"            : "', [",
+    "hadoopcommon.py_code_after"             : "]), 'Node'); print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getClusterTuples": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.getClusterTuples(cluster), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : "; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getClusterTuples_hostname": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.getClusterTuples(cluster, {'Node':'hostname'}), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_selectClusterTuples_node003": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster, {'Node':'hostname'}), ['node003']), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getClusterTuples_node003_alternative": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster), [{'hostname':'node003'}], 'hostname'), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getClusterTuples_node003_status_of_services": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.includeOSServicesInClusterTuples(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster), [{'hostname':'node003'}], 'hostname'), 'status'), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_selectClusterTuples_CMObjects": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); nodes=hadoopcommon.getAllHdfsNodes(cluster,'",
+    "hadoopcommon.py_code_middle"            : "'); nodes=hadoopcommon.getAttr(nodes, hadoopcommon.NAMENODE_ROLE, []); print 'nodes:', nodes; print hadoopcommon.stringifyEach(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster), nodes), 'tuple');",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : "'pythoncm.PhysicalNode object at' may mismatch, because it's their uniqueKeys that are compared."
+  },
+  "hadoopcommon.py_selectClusterTuples_node003_portHTTPS": {
+    "hadoopcommon.py_code_before"            : "cluster=hadoopcommon.getCluster(); print hadoopcommon.stringifyEach(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster, {'Node':'hostname', 'Configuration': 'portHTTPS'}), ['node003']), 'tuple') ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_namenodeRollback_node001": {
+    "hadoopcommon.py_code_before"            : "d = hadoopdefaults.hadoopDefs ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; d.installationDir = '/cm/shared/apps/hadoop/%s' % (i) ; d.configurationDir = '/etc/hadoop/%s' % (i) ; hadoopcommon.namenodeRollback(d, 'node001') ; print i ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_hadoopRollback_node001_node002_node003": {
+    "hadoopcommon.py_code_before"            : "d = hadoopdefaults.hadoopDefs ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; d.installationDir = '/cm/shared/apps/hadoop/%s' % (i) ; d.configurationDir = '/etc/hadoop/%s' % (i) ; hadoopcommon.hadoopRollback(d, 'node001', 'node002', ['node001', 'node002', 'node003']) ; print ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_restartDataNodeForUpgrade_node001": {
+    "hadoopcommon.py_code_before"            : "d = hadoopdefaults.hadoopDefs ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; d.installationDir = '/cm/shared/apps/hadoop/%s' % (i) ; d.configurationDir = '/etc/hadoop/%s' % (i) ; hadoopcommon.restartDataNodeForUpgrade(d, 'node001', '50020') ; print  ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_waitForPythonicLogCommand_report": {
+    "hadoopcommon.py_code_before"            : "d = hadoopdefaults.hadoopDefs ; i = '",
+    "hadoopcommon.py_code_middle"            : "' ; d.installationDir = '/cm/shared/apps/hadoop/%s' % (i) ; d.configurationDir = '/etc/hadoop/%s' % (i) ; hadoopcommon.waitForPythonicLogCommand('su -c \\\"/cm/shared/apps/hadoop/%s/bin/hdfs --config /etc/hadoop/%s dfsadmin -report\\\" hdfs' % (i, i)) ; print  ",
+    "hadoopcommon.py_code_after"             : " ; print '",
+    "hadoopcommon.py_code_after_tool"        : "'",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getAdditionalToolByName": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print hadoopcommon.getAdditionalToolByName(cluster, instanceName, toolName); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_isStandalone": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print hadoopcommon.isStandalone(cluster, instanceName); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_isStandalone_tool": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print hadoopcommon.isStandalone(cluster, instanceName, [toolName]); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getXmlDump": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print hadoopcommon.getXmlDump(cluster.find(instanceName, 'HadoopHDFS')); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_getClusterTuples_instance": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; instanceObj = cluster.find(instanceName, 'HadoopHDFS') ; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ; print hadoopcommon.stringifyEach(hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster), [instanceObj]), 'tuple') ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_remove_instance_overlays": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; instanceObj = cluster.find(instanceName, 'HadoopHDFS') ; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ; tuples = hadoopcommon.selectClusterTuples(hadoopcommon.getClusterTuples(cluster), [instanceObj]) ; hadoopcommon.removeObjects(cluster, hadoopcommon.getAttrs(tuples, 'ConfigurationOverlay'))",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_stash_all_configurations": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; stash = {'stashLocation': '/tmp/all_configurations/'} ; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print(hadoopcommon.stashFiles('/etc/hadoop/', stash)); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_stash_and_restore_all_configurations": {
+    "hadoopcommon.py_code_before"            : "cluster = hadoopcommon.getCluster(); instanceName='", 
+    "hadoopcommon.py_code_middle"            : "'; roleList=[",
+    "hadoopcommon.py_code_after"             : "]; stash = {'stashLocation': '/tmp/all_configurations/'} ; toolName='",
+    "hadoopcommon.py_code_after_tool"        : "' ;  print(hadoopcommon.stashFiles('/etc/hadoop', stash)); cmutils.logCommand('mv /etc/hadoop/ /tmp/etc_hadoop-%s'% ('_'.join(time.ctime().split(' '))), hadoopcommon.logfile) ; print(hadoopcommon.stashPopAllFiles(stash)); ",
+    "interactions" : ["hadoopcommon.py_code_runner_for_instance"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_get_zookeeper_nodes": {
+    "interactions" : ["zookeeper", "hadoopcommon.py_get_role_nodes"],
+    "comment"      : ""
+  },
+  "hadoopcommon.py_get_namenode_nodes": {
+    "interactions" : ["namenode", "hadoopcommon.py_get_role_nodes"],
+    "comment"      : ""
+  },
+  "namenode_http_default_settings": {
+    "service_port"                 : "50070",
+    "http_service_port"            : "50070",
+    "comment"                      : ""
+  },
+  "namenode_service_default_settings": {
+    "service_port"                 : "8020",
+    "comment"                      : ""
+  },
+  "namenode_default_settings": {
+    "interactions" : ["namenode_http_default_settings", "namenode_service_default_settings"],
+    "comment"                      : ""
+  },
+  "namenode": {
+    "hadoopcommon_role_list"       : "hadoopcommon.NAMENODE_ROLE",
+    "role_purpose"                 : "namenode",
+    "role_purpose_realm1"          : "hadoop",
+    "role_purpose_realm2"          : "hdfs",
+    "interactions" : ["namenode_default_settings"],
+    "comment"                      : ""
+  },
+  "datanode_http_default_settings": {
+    "service_port"                 : "50075",
+    "http_service_port"            : "50075",
+    "comment"                      : ""
+  },
+  "datanode_https_default_settings": {
+    "service_port"                 : "50475",
+    "https_service_port"           : "50475",
+    "comment"                      : ""
+  },
+  "datanode_service_ipc_default_settings": {
+    "service_port"                 : "50020",
+    "ipc_service_port"             : "50020",
+    "comment"                      : ""
+  },
+  "datanode_service_dfsclient_default_settings": {
+    "service_port"                 : "50010",
+    "dfsclient_service_port"       : "50010",
+    "comment"                      : ""
+  },
+  "datanode_service_default_settings": {
+    "interactions" : ["datanode_service_ipc_default_settings"],
+    "comment"                      : ""
+  },
+  "datanode_default_settings": {
+    "interactions" : ["datanode_http_default_settings", "datanode_service_dfsclient_default_settings", "datanode_service_ipc_default_settings", "datanode_service_default_settings"],
+    "comment"                      : ""
+  },
+  "datanode": {
+    "hadoopcommon_role_list"       : "hadoopcommon.DATANODE_ROLE",
+    "role_purpose"                 : "datanode",
+    "role_purpose_realm1"          : "hadoop",
+    "role_purpose_realm2"          : "hdfs",
+    "interactions" : ["datanode_default_settings"],
+    "comment"                      : ""
+  },
+  "resourcemanager_scheduler_default_settings": {
+    "service_port"                 : "8030",
+    "comment"                      : ""
+  },
+  "resourcemanager_resource-tracker_default_settings": {
+    "service_port"                 : "8031",
+    "comment"                      : ""
+  },
+  "resourcemanager_service_default_settings": {
+    "service_port"                 : "8032",
+    "comment"                      : ""
+  },
+  "resourcemanager_default_settings": {
+    "interactions" : ["resourcemanager_scheduler_default_settings", "resourcemanager_resource-tracker_default_settings", "resourcemanager_service_default_settings"],
+    "comment"                      : ""
+  },
+  "resourcemanager": {
+    "hadoopcommon_role_list"       : "hadoopcommon.RESOURCEMANAGER_ROLE",
+    "role_purpose"                 : "resourcemanager",
+    "role_purpose_realm1"          : "yarn",
+    "role_purpose_realm2"          : "yarn",
+    "interactions" : ["resourcemanager_default_settings"],
+    "comment"                      : ""
+  },
+  "resourcemanager_timeline_web_default_settings": {
+    "service_port"                 : "8188",
+    "comment"                      : ""
+  },
+  "timeline_web_default_settings": {
+    "interactions" : ["resourcemanager_timeline_web_default_settings"],
+    "comment"      : "alias"
+  },
+  "resourcemanager_timeline_application_history_default_settings": {
+    "service_port"                 : "10021",
+    "comment"                      : ""
+  },
+  "timeline_application_history_default_settings": {
+    "interactions" : ["resourcemanager_timeline_application_history_default_settings"],
+    "comment"      : "alias"
+  },
+  "resourcemanager_timeline_default_settings": {
+    "interactions" : ["resourcemanager_timeline_web_default_settings", "resourcemanager_timeline_application_history_default_settings"],
+    "comment"                      : ""
+  },
+  "timeline_default_settings": {
+    "interactions" : ["resourcemanager_timeline_default_settings"],
+    "comment"      : "alias"
+  },
+  "timelineserver": {
+    "hadoopcommon_role_list"       : "hadoopcommon.RESOURCEMANAGER_ROLE",
+    "role_purpose"                 : "timelineserver",
+    "role_purpose_realm1"          : "yarn",
+    "role_purpose_realm2"          : "yarn",
+    "interactions" : ["timeline_default_settings"],
+    "comment"                      : "timelineserver is independent, but in bright is installed in the same nodes as resourcemanager. confusing, but better this way so far."
+  },
+  "node001": {
+    "node"                         : "node001",
+    "comment"                      : ""
+  },
+  "node002": {
+    "node"                         : "node002",
+    "comment"                      : ""
+  },
+  "node003": {
+    "node"                         : "node003",
+    "comment"                      : ""
+  },
+  "node004": {
+    "node"                         : "node004",
+    "comment"                      : ""
+  },
+  "node005": {
+    "node"                         : "node005",
+    "comment"                      : ""
+  },
+  "localhost": {
+    "node"                         : "localhost",
+    "comment"                      : ""
+  },
+  "empty_node": {
+    "node"                         : "",
+    "comment"                      : ""
+  },
+  "datanode_on_node001_defaults": {
+    "node:service_port"            : "node001:50020",
+    "hadoop_subsubcommand"         : "node001:50020",
+    "interactions" : ["datanode", "node001"],
+    "comment"      : ""
+  },
+  "datanode_on_node002_defaults": {
+    "node:service_port"            : "node002:50020",
+    "hadoop_subsubcommand"         : "node002:50020",
+    "interactions" : ["datanode", "node002"],
+    "comment"      : ""
+  },
+  "datanode_on_node003_defaults": {
+    "node:service_port"            : "node003:50020",
+    "hadoop_subsubcommand"         : "node003:50020",
+    "interactions" : ["datanode", "node003"],
+    "comment"      : ""
+  },
+  "node_instance_role_purpose_command": {
+    "command": [
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "position_0" },
+      { "replace"      : "node" },
+      { "replace"      : "position_1" },
+      { "literal"      : " " },
+      { "replace"      : "position_2" },
+      { "literal"      : " " },
+      { "replace"      : "node_command" },
+      { "literal"      : " " },
+      { "replace"      : "position_3" },
+      { "replace"      : "instance_name" },
+      { "replace"      : "position_4" },
+      { "replace"      : "role_purpose" },
+      { "replace"      : "position_5" },
+      { "replace"      : "position_6" },
+      { "literal"      : " " },
+      { "replace"      : "position_7" },
+      { "literal"      : " " },
+      { "replace"      : "position_8" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : "modern_design"
+  },
+  "set_/var/lib/hadoop/_source": {
+    "position_0"                   : "",
+    "position_1"                   : "",
+    "position_2"                   : "\"bash -c \\\" ",
+    "position_3"                   : " /var/lib/hadoop/",
+    "position_4"                   : "/",
+    "position_8"                   : "\\\"\"",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "/current/": {
+    "position_5"                   : "/current/",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "edits*": {
+    "position_6"                   : "edits*",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "/current/edits*": {
+    "interactions" : ["/current/", "edits*"],
+    "comment"                      : ""
+  },
+  "set_node_instance_role_purpose_command_/tmp/_destination": {
+    "position_7"                   : "/tmp/",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "empty_node_command": {
+    "node_command"                 : "",
+    "comment"                      : ""
+  },
+  "set_empty_node_command": {
+    "interactions" : ["empty_node_command"],
+    "comment"                      : "alias"
+  },
+  "node_instance_role_purpose_mv_command": {
+    "node_command"                 : "mv",
+    "interactions" : ["set_ssh_as_shell", "node_instance_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "mv_current_edits_to_/tmp/": {
+    "interactions" : ["set_/var/lib/hadoop/_source", "/current/edits*", "set_node_instance_role_purpose_command_/tmp/_destination",  "node_instance_role_purpose_mv_command", "test_current_edits"],
+    "comment"                      : "when namenode is set as role_purpose, will move its edit files to /tmp/. drivers hdfs into a unreliable state, for tests"
+  },
+  "set_node_instance_role_purpose_command_ls_test": {
+    "position_7"                   : "; ls ",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "set_positions_clean": {
+    "position_0"                   : "",
+    "position_1"                   : "",
+    "position_2"                   : "",
+    "position_3"                   : "",
+    "position_4"                   : "",
+    "position_5"                   : "",
+    "position_6"                   : "",
+    "position_7"                   : "",
+    "position_8"                   : "",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "set_empty_position_6": {
+    "position_6"                   : "",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "set_empty_position_7": {
+    "position_7"                   : "",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "node_instance_role_purpose_tar_and_remove_command": {
+    "node_command"                 : "rm -rf edits.tar  ;  tar --remove-files -cvf edits.tar",
+    "interactions" : ["set_ssh_as_shell", "node_instance_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "tar_and_remove_current_edits": {
+    "interactions" : ["set_/var/lib/hadoop/_source", "/current/edits*", "set_empty_position_7",  "node_instance_role_purpose_tar_and_remove_command", "test_current_edits"],
+    "comment"                      : "when namenode is set as role_purpose, will move its edit files to edits.tar. drivers hdfs into a unreliable state, for tests"
+  },
+  "node_instance_role_purpose_tar_extract_command": {
+    "node_command"                 : "tar  -xvf edits.tar -C /",
+    "interactions" : ["set_ssh_as_shell", "node_command"],
+    "comment"                      : ""
+  },
+  "tar_extract_current_edits": {
+    "interactions" : ["set_/var/lib/hadoop/_source", "/current/edits*", "set_empty_position_7",  "node_instance_role_purpose_tar_extract_command", "test_current_edits"],
+    "comment"                      : "when namenode is set as role_purpose, will restore its edit files from a.tar. drivers hdfs into a reliable state after tar_and_remove_current_edits, for tests"
+  },
+  "node_instance_role_purpose_ls_command": {
+    "node_command"                 : "ls",
+    "interactions" : ["set_ssh_as_shell", "node_instance_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "ls_current_edits": {
+    "interactions" : ["set_/var/lib/hadoop/_source", "/current/edits*", "set_empty_position_7",  "node_instance_role_purpose_ls_command"],
+    "comment"                      : "when namenode is set as role_purpose, will list its current edit files."
+  },
+  "tar_list_edits.tar": {
+    "node_command"                 : "tar -tf edits.tar",
+    "interactions" : ["node_command"],
+    "comment"                      : ""
+  },
+  "test_current_edits": {
+    "interactions" : ["tar_list_edits.tar", "ls_current_edits"],
+    "comment"                      : ""
+  },
+
+  "tar_and_remove_/var/lib/hadoop/": {
+    "interactions" : ["set_positions_clean", "set_/var/lib/hadoop/_source", "node_instance_role_purpose_tar_and_remove_command", "test_/var/lib/hadoop/"],
+    "comment"                      : "when namenode is set as role_purpose, will move its to edits.tar. drivers hdfs into a unreliable state, for tests"
+  },
+  "tar_extract_/var/lib/hadoop/": {
+    "interactions" : ["set_positions_clean", "set_/var/lib/hadoop/_source", "node_instance_role_purpose_tar_extract_command", "test_/var/lib/hadoop/"],
+    "comment"                      : "when namenode is set as role_purpose, will restore its edit files from a.tar. drivers hdfs into a reliable state after tar_and_remove_/var/lib/hadoop/, for tests"
+  },
+  "ls_/var/lib/hadoop/": {
+    "interactions" : ["set_/var/lib/hadoop/_source", "node_instance_role_purpose_ls_command"],
+    "comment"                      : "when namenode is set as role_purpose, will list its files."
+  },
+  "test_/var/lib/hadoop/": {
+    "interactions" : ["tar_list_edits.tar", "ls_/var/lib/hadoop/"],
+    "comment"                      : ""
+  },
+  "node_role_purpose_command": {
+    "command": [
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "position_0" },
+      { "replace"      : "node" },
+      { "replace"      : "position_1" },
+      { "literal"      : " " },
+      { "replace"      : "position_2" },
+      { "literal"      : " " },
+      { "replace"      : "node_command" },
+      { "literal"      : " " },
+      { "replace"      : "position_3" },
+      { "replace"      : "role_purpose" },
+      { "replace"      : "position_5" },
+      { "replace"      : "position_6" },
+      { "literal"      : " " },
+      { "replace"      : "position_7" },
+      { "literal"      : " " },
+      { "replace"      : "position_8" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : "modern_design . position_4 is missing for compatibility with  node_instance_role_purpose_command "
+  },
+  "ssh_node_role_purpose_command": {
+    "interactions" : ["set_ssh_as_shell", "node_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "set_ps_aux_node_command": {
+    "node_command"                 : "ps aux",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "ssh_ps_aux_node_role_purpose_command": {
+    "interactions" : ["set_ps_aux_node_command", "ssh_node_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "set_pipe_to_grep": {
+    "position_3"                   : "| grep .",
+    "pipe_command"                 : "| grep .",
+    "interactions" : [],
+    "comment"                      : ""
+  },
+  "ssh_node_ps_aux_pipe_grep_role_purpose": {
+    "interactions" : ["set_pipe_to_grep", "ssh_ps_aux_node_role_purpose_command"],
+    "comment"                      : ""
+  },
+  "role_purpose_processes_on_node": {
+    "interactions" : ["ssh_node_ps_aux_pipe_grep_role_purpose"],
+    "comment"                      : "alias"
+  },
+  "processes_on_node": {
+    "interactions" : ["ssh_node_ps_aux_pipe_grep_role_purpose"],
+    "comment"                      : "not an alias; the implementation of this may change"
+  },
+  "node_command": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "replace"      : "node_command" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : "modern_design"
+  },
+  "node_command_reboot": {
+    "node_command"                 : "reboot",
+    "interactions" : ["set_ssh_as_shell", "node_command"],
+    "comment"                      : ""
+  },
+  "hdfs_command": {
+    "interactions" : ["empty_node", "set_bash_as_shell", "node_hdfs_command", "current_as_shell"],
+    "comment"      : ""
+  },
+  "hadoop-daemon.sh_command": {
+    "interactions" : ["set_ssh_as_shell", "node_hadoop-daemon.sh_command", "current_as_shell"],
+    "comment"      : ""
+  },
+  "node_hadoop_command": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "literal"      : " ' su -c \"/cm/shared/apps/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "replace"      : "hadoop_program" },
+      { "literal"      : " " },
+      { "literal"      : "--config /etc/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : " " },
+      { "replace"      : "action" },
+      { "literal"      : " " },
+      { "replace"      : "hadoop_command" },
+      { "literal"      : " " },
+      { "replace"      : "hadoop_subcommand" },
+      { "literal"      : " " },
+      { "replace"      : "hadoop_subsubcommand" },
+      { "literal"      : " " },
+      { "replace"      : "hadoop_subsubsubcommand" },
+      { "literal"      : " " },
+      { "literal"      : " ; echo $? " },
+      { "literal"      : "\" hdfs" },
+      { "literal"      : " ' " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "node_hdfs_command": {
+    "hadoop_program"               : "/bin/hdfs",
+    "interactions" : ["empty_action", "node_hadoop_command"],
+    "comment"      : ""
+  },
+  "node_hadoop-daemon.sh_command": {
+    "hadoop_program"               : "/sbin/hadoop-daemon.sh",
+    "interactions" : ["node_hadoop_command"],
+    "comment"      : ""
+  },
+  "node_hadoop-daemon.sh_start_command": {
+    "interactions" : ["start_action", "node_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "ssh_node_hdfs_command": {
+    "interactions" : ["set_ssh_as_shell", "node_hdfs_command"],
+    "comment"      : ""
+  },
+  "ssh_node_hadoop-daemon.sh_command": {
+    "interactions" : ["set_ssh_as_shell", "node_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "set_namenode_hdfs_command": {
+    "hadoop_command"               : "namenode",
+    "comment"      : ""
+  },
+  "set_rollingUpgrade_hdfs_subcommand": {
+    "hadoop_subcommand"            : "-rollingUpgrade",
+    "comment"      : ""
+  },
+  "set_getDatanodeInfo_hdfs_subcommand": {
+    "hadoop_subcommand"            : "-getDatanodeInfo",
+    "comment"      : ""
+  },
+  "set_shutdownDatanode_hdfs_subcommand": {
+    "hadoop_subcommand"            : "-shutdownDatanode",
+    "comment"      : ""
+  },
+  "set_downgrade_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "downgrade",
+    "comment"      : ""
+  },
+  "set_rollback_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "rollback",
+    "comment"      : ""
+  },
+  "set_started_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "started",
+    "comment"      : ""
+  },
+  "set_finalize_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "finalize",
+    "comment"      : ""
+  },
+  "set_prepare_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "prepare",
+    "comment"      : ""
+  },
+  "set_query_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "query",
+    "comment"      : ""
+  },
+  "set_upgrade_hdfs_subsubsubcommand": {
+    "hadoop_subsubsubcommand"       : "upgrade",
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_downgrade_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_downgrade_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_rollback_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_rollback_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_started_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_started_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_finalize_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_finalize_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_prepare_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_prepare_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_namenode_rollingUpgrade_query_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "set_rollingUpgrade_hdfs_subcommand", "set_query_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "hdfs_command_clean_attributes": {
+    "hadoop_command"               : "",
+    "hadoop_subcommand"            : "",
+    "hadoop_subsubcommand"         : "",
+    "hadoop_subsubsubcommand"      : "",
+    "comment"      : ""
+  },
+  "namenode_hdfs_command": {
+    "interactions" : ["set_namenode_hdfs_command", "hdfs_command"],
+    "comment"      : ""
+  },
+  "namenode_hadoop-daemon.sh_command": {
+    "interactions" : ["set_namenode_hdfs_command", "hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "namenode_rollingUpgrade_hdfs_command": {
+    "interactions" : ["set_rollingUpgrade_hdfs_subcommand", "namenode_hdfs_command"],
+    "comment"      : ""
+  },
+  "namenode_rollingUpgrade_hadoop-daemon.sh_command": {
+    "interactions" : ["set_rollingUpgrade_hdfs_subcommand", "namenode_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_rollingUpgrade_hdfs_command": {
+    "interactions" : ["set_rollingUpgrade_hdfs_subcommand", "dfsadmin_hdfs_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_started_hdfs_command": {
+    "interactions" : ["set_started_hdfs_subsubcommand", "namenode_rollingUpgrade_hdfs_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_finalize_hdfs_command": {
+    "interactions" : ["set_finalize_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hdfs_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_prepare_hdfs_command": {
+    "interactions" : ["set_prepare_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hdfs_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_query_hdfs_command": {
+    "interactions" : ["set_query_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hdfs_command"],
+    "comment"      : ""
+  },
+
+  "rollingUpgrade_started_hadoop-daemon.sh_command": {
+    "interactions" : ["set_started_hdfs_subsubcommand", "namenode_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_rollback_hadoop-daemon.sh_command": {
+    "interactions" : ["set_rollback_hdfs_subsubcommand", "namenode_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_downgrade_hadoop-daemon.sh_command": {
+    "interactions" : ["set_drowngrad_dmin_rollingUpgrade_hadoop-daemon.sh_commandsubsubcommand", "namenode_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : ""
+  },
+  "rollingUpgrade_finalize_hadoop-daemon.sh_command": {
+    "interactions" : ["set_finalize_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : "i think this command doesn't exist in hadoop-daemon.sh"
+  },
+  "rollingUpgrade_prepare_hadoop-daemon.sh_command": {
+    "interactions" : ["set_prepare_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : "i think this command doesn't exist in hadoop-daemon.sh"
+  },
+  "rollingUpgrade_query_hadoop-daemon.sh_command": {
+    "interactions" : ["set_query_hdfs_subsubcommand", "dfsadmin_rollingUpgrade_hadoop-daemon.sh_command"],
+    "comment"      : "i think this command doesn't exist in hadoop-daemon.sh"
+  },
+
+  "dfsadmin_shutdownDatanode_hdfs_command": {
+    "interactions" : ["set_shutdownDatanode_hdfs_subcommand",  "dfsadmin_hdfs_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_shutdownDatanode_upgrade_hdfs_command": {
+    "interactions" : ["set_upgrade_hdfs_subsubsubcommand",  "dfsadmin_shutdownDatanode_hdfs_command", "hdfs_command_clean_attributes"],
+    "comment"      : ""
+  },
+  "dfsadmin_getDatanodeInfo_hdfs_command": {
+    "interactions" : ["set_getDatanodeInfo_hdfs_subcommand",  "dfsadmin_hdfs_command", "hdfs_command_clean_attributes"],
+    "comment"      : ""
+  },
+  "set_dfsadmin_hdfs_command": {
+    "hadoop_command"               : "dfsadmin",
+    "comment"      : ""
+  },
+  "set_report_hdfs_subcommand": {
+    "hadoop_subcommand"            : "-report",
+    "comment"      : ""
+  },
+  "set_safemode_hdfs_subcommand": {
+    "hadoop_subcommand"            : "-safemode",
+    "comment"      : ""
+  },
+  "set_leave_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "leave",
+    "comment"      : ""
+  },
+  "set_enter_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "enter",
+    "comment"      : ""
+  },
+  "set_wait_hdfs_subsubcommand": {
+    "hadoop_subsubcommand"         : "wait",
+    "comment"      : ""
+  },
+  "set_dfsadmin_safemode_leave_hdfs_command": {
+    "interactions" : ["set_dfsadmin_hdfs_command", "set_safemode_hdfs_subcommand", "set_leave_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_dfsadmin_safemode_enter_hdfs_command": {
+    "interactions" : ["set_dfsadmin_hdfs_command", "set_safemode_hdfs_subcommand", "set_enter_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "set_dfsadmin_safemode_wait_hdfs_command": {
+    "interactions" : ["set_dfsadmin_hdfs_command", "set_safemode_hdfs_subcommand", "set_wait_hdfs_subsubcommand"],
+    "comment"      : ""
+  },
+  "dfsadmin_hdfs_command": {
+    "interactions" : ["set_dfsadmin_hdfs_command", "hdfs_command"],
+    "comment"      : ""
+  },
+  "report_hadoop_subcommand": {
+    "interactions" : ["set_report_hdfs_subcommand"],
+    "comment"      : "alias"
+  },
+  "dfsadmin_report_hdfs_command": {
+    "interactions" : ["hdfs_command_clean_attributes", "set_report_hdfs_subcommand", "dfsadmin_hdfs_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_safemode_hdfs_command": {
+    "interactions" : ["set_safemode_hdfs_subcommand", "dfsadmin_hdfs_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_safemode_leave_hdfs_command": {
+    "interactions" : ["set_leave_hdfs_subsubcommand", "dfsadmin_safemode_hdfs_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_safemode_enter_hdfs_command": {
+    "interactions" : ["set_enter_hdfs_subsubcommand", "dfsadmin_safemode_hdfs_command"],
+    "comment"      : ""
+  },
+  "dfsadmin_safemode_wait_hdfs_command": {
+    "interactions" : ["set_wait_hdfs_subsubcommand", "dfsadmin_safemode_hdfs_command"],
+    "comment"      : ""
+  },
+  "testsafemode": {
+    "interactions" : ["dfsadmin_safemode_wait_hdfs_command"],
+    "comment"      : "alias"
+  },
+  "role_purpose_pid_file": {
+    "dirname"      : "/var/run/",
+    "extension"    : ".pid",
+    "comment"      : ""
+  },
+  "ls_pid_file": {
+    "node_command" : "ls",
+    "interactions" : ["set_ssh_as_shell", "role_purpose_pid_file", "node_command_dir_instance_namespace_realm_role", "current_as_shell"],
+    "comment"      : ""
+  },
+  "node_command_dir_instance_namespace_realm_role": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "replace"      : "node_command" },
+      { "literal"      : " " },
+      { "replace"      : "dirname" },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/" },
+      { "replace"      : "role_purpose_realm1" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose_realm2" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose" },
+      { "replace"      : "extension" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "command_service_log_file": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "replace"      : "command_on_file" },
+      { "literal"      : " /var/log/" },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/" },
+      { "replace"      : "role_purpose_realm2" },
+      { "literal"      : "/" },
+      { "replace"      : "role_purpose_realm1" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose_realm2" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose" },
+      { "literal"      : "-" },
+      { "replace"      : "node" },
+      { "literal"      : ".log" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "cat_service_log_file": {
+    "command_on_file"              : "cat",
+    "interactions" : ["command_service_log_file"],
+    "comment"                      : ""
+  },
+  "tail-f_service_log_file": {
+    "command_on_file"              : "tail -f ",
+    "interactions" : ["command_service_log_file"],
+    "comment"                      : ""
+  },
+  "empty_action": {
+    "action"                       : "",
+    "comment"                      : ""
+  },
+  "create_action": {
+    "action"                       : "create",
+    "comment"                      : ""
+  },
+  "delete_action": {
+    "action"                       : "delete",
+    "comment"                      : ""
+  },
+  "start_action": {
+    "action"                       : "start",
+    "comment"                      : ""
+  },
+  "stop_action": {
+    "action"                       : "stop",
+    "comment"                      : ""
+  },
+  "restart_action": {
+    "action"                       : "restart",
+    "comment"                      : ""
+  },
+  "status_action": {
+    "action"                       : "status",
+    "comment"                      : ""
+  },
+  "list_action": {
+    "action"                       : "list ; ",
+    "comment"                      : ""
+  },
+  "service_command_with_cmsh": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "literal"      : "cmsh -c \"" },
+      { "literal"      : " " },
+      { "literal"      : "device use " },
+      { "replace"      : "node" },
+      { "literal"      : "; services ; " },
+      { "replace"      : "action" },
+      { "literal"      : " " },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "-" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose" },
+      { "literal"      : " " },
+      { "literal"      : " " },
+      { "literal"      : "\"" },
+      { "literal"      : " " },
+      { "replace"      : "node_command" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : "TODO: duplicated efforts with cmsh_node_command_subcommand, choose one"
+  },
+  "start_service_with_cmsh": {
+    "interactions" : ["start_action", "service_command_with_cmsh"],
+    "comment"                      : ""
+  },
+  "restart_service_with_cmsh": {
+    "interactions" : ["restart_action", "service_command_with_cmsh"],
+    "comment"                      : ""
+  },
+  "stop_service_with_cmsh": {
+    "interactions" : ["stop_action", "service_command_with_cmsh"],
+    "comment"                      : ""
+  },
+  "status_service_with_cmsh": {
+    "interactions" : ["status_action", "service_command_with_cmsh"],
+    "comment"                      : ""
+  },
+  "list_service_with_cmsh": {
+    "interactions" : ["list_action", "service_command_with_cmsh"],
+    "comment"                      : ""
+  },
+  "wait_for_nodes_up": {
+    "while_actual_value"           : "$( cmsh -c \"device list\" | egrep \"Node.*\\\[ *(DOWN|INSTALLING|INSTALLER_CALLINGINIT) *\\\]\" | egrep -v \"\((Unassigned)\)\" | wc -l)",
+    "while_expected_value"         : "0",
+    "while_body"                   : "echo Node status ; cmsh -c \"device list\" | egrep \"Node.*\\\[ *(DOWN|INSTALLING|INSTALLER_CALLINGINIT) *\\\]\" ;  sleep 5s",
+    "interactions" : ["current_as_shell", "while_command"],
+    "comment"                      : ""
+  },
+  "wait_for_nodes": {
+    "interactions" : ["wait_for_nodes_up"],
+    "comment"                      : "alias"
+  },
+  "wait_for_physical_nodes_not_up": {
+    "while_actual_value"           : "$( cmsh -c \"device list\" | egrep \"PhysicalNode.*\\\[ *(UP) *\\\]\" | egrep -v \"\((Unassigned)\)\" | wc -l)",
+    "while_expected_value"         : "0",
+    "while_body"                   : "echo Node status ; cmsh -c \"device list\" | egrep \"PhysicalNode.*\\\[ *(UP) *\\\]\" ;  sleep 5s",
+    "interactions" : ["current_as_shell", "while_command"],
+    "comment"                      : ""
+  },
+  "wait_for_head_node_up": {
+    "while_actual_value"           : "$( cmsh -c \"device list\" | grep HeadNode.*UP | tail -1 | wc -l)",
+    "while_expected_value"         : "1",
+    "while_body"                   : "echo HeadNode status ; cmsh -c \"device list\" | grep HeadNode | tail -1   ;  sleep 5s",
+    "interactions" : ["current_as_shell", "while_command"],
+    "comment"                      : ""
+  },
+  "wait_for_headnode_up": {
+    "interactions" : ["wait_for_head_node_up"],
+    "comment"                      : "alias"
+  },
+  "wait_for_headnode": {
+    "interactions" : ["wait_for_head_node_up"],
+    "comment"                      : "alias"
+  },
+  "cmsh_node_command_subcommand": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "literal"      : "cmsh -c \" main ; device use " },
+      { "replace"      : "node" },
+      { "literal"      : " ; " },
+      { "replace"      : "node_command" },
+      { "literal"      : " ; " },
+      { "replace"      : "node_subcommand" },
+      { "literal"      : "   " },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "-" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "role_purpose" },
+      { "literal"      : " ; commit ; \" " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                      : "TODO duplicating efforts with service_command_with_cmsh"
+  },
+  "set_services_node_command": {
+    "node_command"                 : "services",
+    "comment"                      : ""
+  },
+  "set_status_node_subcommand": {
+    "node_subcommand"              : "status",
+    "comment"                      : ""
+  },
+  "set_status_all_node_subcommand": {
+    "node_subcommand"              : "status ; ",
+    "comment"                      : ""
+  },
+  "cmsh_node_service_status": {
+    "interactions" : ["set_services_node_command", "set_status_node_subcommand", "cmsh_node_command_subcommand"],
+    "comment"                      : ""
+  },
+  "cmsh_node_service_status_all": {
+    "interactions" : ["set_services_node_command", "set_status_all_node_subcommand", "cmsh_node_command_subcommand"],
+    "comment"                      : ""
+  },
+  "set_remove_node_subcommand": {
+    "node_subcommand"              : "remove",
+    "comment"                      : ""
+  },
+  "set_rm_node_subcommand": {
+    "interactions" : ["set_remove_node_subcommand"],
+    "comment"                      : "alias"
+  },
+  "cmsh_node_service_remove": {
+    "interactions" : ["set_services_node_command", "set_remove_node_subcommand", "cmsh_node_command_subcommand", "cmsh_node_service_status"],
+    "comment"                      : ""
+  },
+  "cmsh_node_service_rm": {
+    "interactions" : ["cmsh_node_service_remove"],
+    "comment"                      : "alias"
+  },
+  "set_stop_node_subcommand": {
+    "node_subcommand"              : "stop",
+    "comment"                      : ""
+  },
+  "cmsh_node_service_remove": {
+    "interactions" : ["set_services_node_command", "set_remove_node_subcommand", "cmsh_node_command_subcommand"],
+    "comment"                      : ""
+  },
+  "cmsh_bigdata_instance_restartallservices": {
+    "command": [
+      { "literal"      : "cmsh -c \" main ; hadoop ; use " },
+      { "replace"      : "instance_name" },
+      { "literal"      : " ; restartallservices \" " },
+      { "literal"      : "" }
+    ]
+  },
+  "cmsh_bigdata_instance_restartallservices_safemode_wait": {
+    "interactions" : ["cmsh_bigdata_instance_restartallservices", "dfsadmin_safemode_wait_hdfs_command"],
+    "comment"                      : ""
+  },
+  "node_command_reboot": {
+    "node_command"                 : "reboot",
+    "interactions" : ["set_ssh_as_shell", "node_command"],
+    "comment"                      : ""
+  },
+  "nmap_port_on_server": {
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "literal"      : "nmap -p " },
+      { "replace"      : "service_port" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"      : ""
+  },
+  "namenode_nmap": {
+    "interactions" : ["namenode_http_default_settings" ,"nmap_port_on_server", "namenode", "nmap_port_on_server"],
+    "comment"                      : ""
+  },
+  "update_systemd_file": {
+    "comment"      : "note: this interaction should be called update_service_file instead. does something like: sed 's/nozk-zookeeper/zookeeper-3.4.8/g'  /usr/lib/systemd/system/hadoop-nozk-zookeeper.service",
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "literal"      : "sed 's/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "toolname" },
+      { "literal"      : "-" },
+      { "replace"      : "tool_release" },
+      { "literal"      : "/g' " },
+      { "replace"      : "systemd_system_dir" },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "-" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "*" },
+      { "replace"      : "extension" },
+      { "literal"      : "  -i " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ]
+  },
+  "grep_tool_on_systemd_file": {
+    "comment"      : "egrep zookeeper /usr/lib/systemd/system/hadoop-nozk-zookeeper.service # TODO: toolname should be service_name",
+    "command": [
+      { "replace"      : "pre_command" },
+      { "literal"      : " " },
+      { "replace"      : "shell_command" },
+      { "literal"      : " " },
+      { "replace"      : "node" },
+      { "literal"      : " " },
+      { "literal"      : " egrep \"" },
+      { "replace"      : "toolname" },
+      { "literal"      : "-" },
+      { "literal"      : "\\|" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "\" " },
+      { "literal"      : " " },
+      { "replace"      : "systemd_system_dir" },
+      { "replace"      : "traditional_namespace" },
+      { "literal"      : "-" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "*" },
+      { "replace"      : "extension" },
+      { "literal"      : " " },
+      { "replace"      : "post_command" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ]
+  },
+  "set_systemd_defaults": {
+    "extension"                   : ".service",
+    "systemd_system_dir"          : "/usr/lib/systemd/system/",
+    "comment"                     : ""
+  },
+  "set_init_defaults": {
+    "extension"                   : "",
+    "systemd_system_dir"          : "/etc/init.d/",
+    "comment"                     : ""
+  },
+  "set_hadoop_as_traditional_namespace": {
+    "traditional_namespace"       : "hadoop",
+    "comment"                     : "this 'hadoop' actually means 'bigdata'"
+  },
+  "bigdata_check_systemd_file_using_systemd_defaults": {
+    "interactions" : ["set_hadoop_as_traditional_namespace" ,"set_systemd_defaults", "grep_tool_on_systemd_file"],
+    "comment"                     : ""
+  },
+  "bigdata_update_systemd_file_using_systemd_defaults": {
+    "interactions" : ["set_hadoop_as_traditional_namespace" ,"set_systemd_defaults", "update_systemd_file", "bigdata_check_systemd_file_using_systemd_defaults"],
+    "comment"                     : ""
+  },
+  "bigdata_check_service_files_using_defaults": {
+    "interactions" : ["set_hadoop_as_traditional_namespace" ,"set_systemd_defaults", "grep_tool_on_systemd_file", "set_init_defaults", "grep_tool_on_systemd_file"],
+    "comment"                     : ""
+  },
+  "bigdata_update_service_files_using_defaults": {
+    "interactions" : ["set_hadoop_as_traditional_namespace" ,"set_systemd_defaults", "update_systemd_file", "set_init_defaults", "update_systemd_file", "bigdata_check_service_files_using_defaults"],
+    "comment"                     : ""
+  },
+  "hadoop_and_tool_version": {
+    "command": [
+      { "literal"      : "cmsh -c \"hadoop ; show " },
+      { "replace"      : "instance_name" },
+      { "literal"      : "\" |  egrep -i \"" },
+      { "replace"      : "toolname" },
+      { "literal"      : "|Hadoop\" | egrep version" },
+      { "literal"      : "" }
+    ]
+  },
+  "cmsh_instance_overview_grep_toolname": {
+    "command": [
+      { "literal"      : "cmsh -c \"hadoop ; overview " },
+      { "replace"      : "instance_name" },
+      { "literal"      : "\" |  egrep -i \"" },
+      { "replace"      : "toolname" },
+      { "literal"      : "\" " },
+      { "literal"      : "" }
+    ]
+  },
+  "tool_smoke_test": {
+    "interactions" : ["hadoopcommon.py_getAdditionalToolByName", "hadoopcommon.py_isStandalone_tool", "hadoopcommon.py_isStandalone", "old_tool_smoke_test"],
+    "comment"                     : ""
+  },
+  "old_tool_smoke_test": {
+    "command": [
+      { "literal"      : "cmsh -c \"hadoop ; show " },
+      { "replace"      : "instance_name" },
+      { "literal"      : " | egrep -i " },
+      { "replace"      : "toolname" },
+      { "literal"      : "\"; " },
+      { "literal"      : "" },
+      { "literal"      : " echo 'ls -d /cm/shared/apps/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : " || " },
+      { "literal"      : " ls -d /cm/shared/apps/hadoop/Apache/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "* '; " },
+      { "literal"      : "" },
+      { "literal"      : " ls -d /cm/shared/apps/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "|| " },
+      { "literal"      : " ls -d /cm/shared/apps/hadoop/Apache/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "* ; " },
+      { "literal"      : "" },
+      { "literal"      : " echo ls /cm/shared/modulefiles/" },
+      { "replace"      : "toolname" },
+      { "literal"      : "/*/*/*" },
+      { "literal"      : " ; " },
+      { "literal"      : "" },
+      { "literal"      : " ls /cm/shared/modulefiles/" },
+      { "replace"      : "toolname" },
+      { "literal"      : "/*/*/*" },
+      { "literal"      : " ; " },
+      { "literal"      : "" },
+      { "literal"      : " echo ls -d /cm/shared/apps/hadoop/Apache/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : " ; " },
+      { "literal"      : "" },
+      { "literal"      : " ls -d /cm/shared/apps/hadoop/Apache/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : " ; " },
+      { "literal"      : "" },
+      { "literal"      : "" }
+    ]
+  },
+  "instance_remove_all_tools" : {
+    "interactions": [
+	"comment:uninstall the tools on that instance",
+	"tool_options_clear","zookeeper","tool_uninstall",
+	"tool_options_clear","hive","tool_uninstall",
+	"tool_options_clear","hbase","tool_uninstall",
+	"tool_options_clear","spark","tool_uninstall",
+        "tool_options_clear","accumulo","tool_uninstall",
+        "tool_options_clear","alluxio","tool_uninstall",
+        "tool_options_clear","drill","tool_uninstall",
+        "tool_options_clear","flink","tool_uninstall",
+        "tool_options_clear","giraph","tool_uninstall",
+        "tool_options_clear","ignite","tool_uninstall",
+        "tool_options_clear","impala","tool_uninstall",
+        "tool_options_clear","kafka","tool_uninstall",
+        "tool_options_clear","opentsdb","tool_uninstall",
+        "tool_options_clear","pig","tool_uninstall",
+        "tool_options_clear","security","tool_uninstall",
+        "tool_options_clear","sqoop","tool_uninstall",
+        "tool_options_clear","storm","tool_uninstall",
+        "tool_options_clear","tez","tool_uninstall",
+        "tool_options_clear","zeppelin","tool_uninstall",
+	"unsed"
+    ],
+    "comment": ""
+  },
+  "instance_remove_symlink": {
+    "command": [
+      { "literal"      : "rm " },
+      { "literal"      : "/cm/shared/apps/hadoop/" },
+      { "replaceQuoted": "instance_name" }
+    ],
+    "comment"                     : ""
+  },
+  "instance_remove": {
+    "command": [
+      { "replaceQuoted": "setup_script_path_prefix" },
+      { "replaceQuoted": "setup_script_path" },
+      { "literal"      : "cm-" },
+      { "replace"      : "big_data_instance_type" },
+      { "literal"      : "-setup -u " },
+      { "replaceQuoted": "instance_name" }
+    ],
+    "comment"                     : ""
+  },
+  "instance_remove_with_helper_script": {
+    "command": [
+      { "literal"      : "cm-spark-setup" },
+      { "literal"      : " -u " },
+      { "replaceQuoted": "instance_name" },
+      { "literal"      : " ; " },
+      { "literal"      : "source " },
+      { "replaceQuoted": "runtime_testing_helpers_script_location_prefix" },
+      { "replaceQuoted": "runtime_testing_helpers_script_location" },
+      { "literal"      : "; remove_instance " },
+      { "replaceQuoted": "instance_name" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : "cm-spark-setup: if spark is installed on a big data instance, remove_instance will fail."
+  },
+  "instance_force_removal": {
+    "interactions" : ["cmsh_node_service_status_all", "instance_remove_all_tools", "instance_remove", "instance_remove_symlink", "hadoopcommon.py_remove_instance_overlays", "instance_remove", "cmsh_node_service_status_all"],
+    "comment"                     : ""
+  },
+  "instance_force_remove": {
+    "interactions" : ["instance_force_removal"],
+    "comment"                     : "alias"
+  },
+  "instance_install_when_nodes_up": {
+    "command": [
+      { "replaceQuoted": "setup_script_path_prefix" },
+      { "replaceQuoted": "setup_script_path" },
+      { "literal"      : "cm-" },
+      { "replace"      : "big_data_instance_type" },
+      { "literal"      : "-setup -c " },
+      { "replaceQuoted": "filename" }
+    ],
+    "comment"                     : ""
+  },
+  "instance_install": {
+    "interactions" : ["wait_for_nodes_up", "instance_install_when_nodes_up"],
+    "comment"                     : ""
+  },
+  "tool_setup": {
+    "command": [
+      { "replaceQuoted": "setup_script_path_prefix" },
+      { "replaceQuoted": "setup_script_path" },
+      { "literal"      : "cm" },
+      { "replace"      : "setup_namespace" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "-setup " },
+      { "replace"      : "toolsetupoption" },
+      { "literal"      : " " },
+      { "replaceQuoted": "instance_name" },
+      { "literal"      : " " },
+      { "replace"      : "tarball_option" },
+      { "literal"      : " " },
+      { "replaceQuoted": "tool_tarball" },
+      { "literal"      : " " },
+      { "replace"      : "tool_javahome_options" },
+      { "literal"      : " " },
+      { "replace"      : "tool_complementary_options" },
+      { "literal"      : " " },
+      { "replace"      : "tool_connector_options" },
+      { "literal"      : "" }
+    ]
+  },
+  "old_tool_run_version": {
+    "command": [
+      { "replace"      : "run_version_command" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "position_2_echo" : {
+    "position_2"                  : " ;  echo ",
+    "comment"                     : ""
+  },
+  "tool_run_version" : {
+    "interactions" : ["set_positions_clean", "position_2_echo", "tool_run_command", "set_positions_clean"],
+    "comment"                     : ""
+  },
+  "tool_run_command": {
+    "comment"                     : "",
+    "command": [
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_release" },
+      { "literal"      : " " },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+
+      { "replace"      : "tool_command" },
+      { "literal"      : " " },
+      { "replace"      : "position_0" },
+      { "literal"      : " " },
+      { "replace"      : "position_1" },
+      { "literal"      : " " },
+      { "replace"      : "position_2" },
+      { "literal"      : " " },
+      { "literal"      : "/cm/shared/apps/hadoop/Apache" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "-" },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "script_relative_location" },
+      { "literal"      : " " },
+      { "replace"      : "position_3" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_release" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ]
+  },
+  "module_load": {
+    "command": [
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_release" },
+      { "literal"      : "" }
+    ]
+  },
+  "module_rm": {
+    "command": [
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_release" },
+      { "literal"      : "" }
+    ]
+  },
+  "interactions.rb": {
+    "filename"                    : "interactions.rb",
+    "comment"                     : ""
+  },
+  "interactions.json": {
+    "filename"                    : "interactions.json",
+    "comment"                     : ""
+  },
+  "hamlet.txt": {
+    "download_url"                : "https://courses.cs.washington.edu/courses/cse341/07wi/handouts/hamlet.txt",
+    "filename"                    : "hamlet.txt",
+    "interactions" : ["file_download"],
+    "comment"                     : ""
+  },
+  "/root/cluster-tools/trunk/cluster-tools_files/": {
+    "filename"                    : "/root/cluster-tools/trunk/cluster-tools_files/",
+    "comment"                     : ""
+  },
+  "/root/cluster-tools/cluster-tools_files/": {
+    "filename"                    : "/root/cluster-tools/cluster-tools_files/",
+    "comment"                     : ""
+  },
+  "/var/log/messages": {
+    "filename"                    : "/var/log/messages",
+    "comment"                     : ""
+  },
+  "/var/log/cmdaemon": {
+    "filename"                    : "/var/log/cmdaemon",
+    "comment"                     : ""
+  },
+  "a+r": {
+    "chmod_permission"            : "a+r",
+    "comment"                     : ""
+  },
+  "cat": {
+    "command": [
+      { "literal"      : "cat" },
+      { "literal"      : " " },
+      { "replace"      : "filename" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "chmod": {
+    "command": [
+      { "literal"      : "chmod" },
+      { "literal"      : " " },
+      { "replace"      : "chmod_options" },
+      { "literal"      : " " },
+      { "replace"      : "chmod_permission" },
+      { "literal"      : " " },
+      { "replace"      : "filename" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "chmod-R": {
+    "chmod_options"               : "-R",
+    "interactions" : ["chmod"],
+    "comment"                     : ""
+  },
+  "sed_file": {
+    "command": [
+      { "literal"      : "sed -e 's/" },
+      { "replace"      : "pattern" },
+      { "literal"      : "/" },
+      { "replace"      : "expression" },
+      { "literal"      : "/" },
+      { "replace"      : "s_options" },
+      { "literal"      : "'" },
+      { "literal"      : " " },
+      { "literal"      : " -i " },
+      { "replace"      : "filename" },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "sed_replace_all": {
+    "s_options"                   : "g",
+    "interactions" : ["sed_file"],
+    "comment"                     : ""
+  },
+  "sed_replace_one_per_line": {
+    "s_options"                   : "",
+    "interactions" : ["sed_file"],
+    "comment"                     : ""
+  },
+  "sed_patterns_spaces": {
+    "pattern"                     : " ",
+    "comment"                     : ""
+  },
+  "sed_patterns_to_the_1st_spacegroup": {
+    "pattern"                     : "^[^ ]*[ ]*",
+    "comment"                     : ""
+  },
+  "sed_patterns_to_the_2nd_spacegroup": {
+    "pattern"                     : "^[^ ]*[ ]*[^ ]*[ ]*",
+    "comment"                     : ""
+  },
+  "sed_patterns_to_the_3rd_spacegroup": {
+    "pattern"                     : "^[^ ]*[ ]*[^ ]*[ ]*[^ ]*[ ]*",
+    "comment"                     : ""
+  },
+  "sed_by_-----": {
+    "expression"                  : "-----",
+    "comment"                     : ""
+  },
+  "sed_by___": {
+    "expression"                  : "___",
+    "comment"                     : ""
+  },
+  "sed_by_empty": {
+    "expression"                  : "",
+    "comment"                     : ""
+  },
+  "sed_file_replace_spaces": {
+    "interactions" : ["sed_patterns_spaces", "sed_replace_all"],
+    "comment"                     : ""
+  },
+  "sed_file_replace_spaces_with___": {
+    "interactions" : ["sed_by___", "sed_file_replace_spaces"],
+    "comment"                     : ""
+  },
+  "sed_file_replace_all_spaces": {
+    "interactions" : ["sed_file_replace_spaces"],
+    "comment"                     : "alias"
+  },
+  "sed_file_replace_all_spaces_with___": {
+    "interactions" : ["sed_file_replace_spaces_with___"],
+    "comment"                     : "alias"
+  },
+  "sleep_23": {
+    "command": [
+      { "literal"      : "sleep 23 " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "sleep_180": {
+    "command": [
+      { "literal"      : "sleep 180 " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "sleep_1800": {
+    "command": [
+      { "literal"      : "sleep 30m " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : "half an hour"
+  },
+  "cp": {
+    "command": [
+      { "literal"      : "cp -r " },
+      { "replace"      : "cp_options" },
+      { "literal"      : " " },
+      { "replace"      : "filename" },
+      { "literal"      : " " },
+      { "replace"      : "cp_destination" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "cp_force": {
+    "command": [
+      { "literal"      : "rm -f " },
+      { "replace"      : "cp_destination" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "cp -r " },
+      { "replace"      : "cp_options" },
+      { "literal"      : " " },
+      { "replace"      : "filename" },
+      { "literal"      : " " },
+      { "replace"      : "cp_destination" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "instanciate_file_update_filename": {
+    "filename"                    : "/tmp/instanciated_file",
+    "comment"                     : ""
+  },
+  "instanciate_file": {
+    "cp_destination"              : "/tmp/instanciated_file",
+    "interactions" : ["cp_force", "instanciate_file_update_filename"],
+    "comment"                     : ""
+  },
+  "prepare_log_for_mapreduce": {
+    "interactions" : ["a+r",
+                     "chmod-R",
+                     "instanciate_file",
+                     "sed_patterns_to_the_3rd_spacegroup",
+                     "sed_by_empty",
+                     "sed_replace_one_per_line",
+                     "sed_file_replace_spaces_with___"],
+    "comment"                     : ""
+  },
+  "hadoop_mapreduce": {
+    "command": [
+      { "literal"      : "su hdfs -c '" },
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -ls /wordcount_input/ ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -rm -r /output ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop jar   /cm/shared/apps/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/hadoop-examples-" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ".jar   wordcount /wordcount_input /output ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop jar   /cm/shared/apps/hadoop/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/share/hadoop/mapreduce/hadoop-mapreduce-examples-" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ".jar   " },
+      { "replace"      : "mapreduce_jar" },
+      { "literal"      : " /wordcount_input /output ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -cat /output/* | sort -nk 2 ;" },
+      { "literal"      : " " },
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : " " },
+      { "literal"      : "'" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "hdfs_fsck": {
+    "command": [
+      { "literal"      : "su hdfs -c '" },
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "hdfs fsck / ;" },
+      { "literal"      : " " },
+      { "literal"      : " " },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : " " },
+      { "literal"      : "'" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "dfs_rm_dir": {
+    "command": [
+      { "literal"      : "su hdfs -c '" },
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -rm -r " },
+      { "replace"      : "dfs_dir" },
+      { "literal"      : " " },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : " " },
+      { "literal"      : "'" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "hadoop_prepare_output_dir": {
+    "dfs_dir"                     : "/output",
+    "interactions" : ["dfs_rm_dir"],
+    "comment"                     : ""
+  },
+  "hadoop_prepare_input_dir": {
+    "command": [
+      { "literal"      : "tar -cf " },
+      { "literal"      : "/tmp/a.tar" },
+      { "literal"      : " " },
+      { "replace"      : "filename" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "su hdfs -c '" },
+      { "literal"      : "module load " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : ";" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -rm -r /wordcount_input ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -mkdir /wordcount_input ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -copyFromLocal " },
+      { "literal"      : "/tmp/a.tar" },
+      { "literal"      : " /wordcount_input ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -ls /output/ ;" },
+      { "literal"      : " " },
+      { "literal"      : "hadoop fs -ls /wordcount_input/ ;" },
+      { "literal"      : " " },
+      { "literal"      : "module rm " },
+      { "replace"      : "toolname" },
+      { "literal"      : "/" },
+      { "replace"      : "instance_name" },
+      { "literal"      : "/Apache/" },
+      { "replace"      : "tool_version" },
+      { "literal"      : " " },
+      { "literal"      : "'" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "hadoop_prepare_input_and_output_dirs": {
+    "interactions" : ["hadoop_prepare_input_dir", "hadoop_prepare_output_dir"],
+    "comment"                     : ""
+  },
+  "hadoop_wordcount": {
+    "mapreduce_jar"               : "wordcount",
+    "interactions" : ["hadoop_prepare_output_dir", "hadoop_mapreduce"],
+    "comment"                     : ""
+  },
+  "hadoop_wordcount_example": {
+    "interactions" : ["dfsadmin_safemode_wait_hdfs_command", "hadoop_prepare_input_and_output_dirs", "hadoop_wordcount"],
+    "comment"                     : ""
+  },
+  "hadoop_wordcount_example_no_safemode_wait": {
+    "interactions" : ["hadoop_prepare_input_and_output_dirs", "hadoop_wordcount"],
+    "comment"                     : ""
+  },
+  "hadoop_mapreduce_example": {
+    "interactions" : ["hadoop_wordcount_example"],
+    "comment"                     : "alias"
+  },
+
+  "spark_example_pi" : {
+    "script_relative_location"    : "examples/src/main/python/pi.py",
+    "comment"                     : ""
+  },
+
+  "spark_example_pi_1" : {
+    "position_3"                  : "1",
+    "interactions" : ["set_positions_clean", "spark_example_pi"],
+    "comment"                     : ""
+  },
+
+  "spark_example_transitive_closure" : {
+    "interactions" : [],
+    "script_relative_location"    : "examples/src/main/python/transitive_closure.py",
+    "comment"                     : ""
+  },
+
+  "spark_example_transitive_closure_10" : {
+    "position_3"                  : "10",
+    "interactions" : ["set_positions_clean", "spark_example_transitive_closure"],
+    "comment"                     : ""
+  },
+
+  "spark_submit_job" : {
+    "tool_command"                : "spark-submit",
+    "interactions" : ["spark", "tool_run_command"],
+    "comment"                     : ""
+  },
+
+  "hadoop_bigdata_instance": {
+    "big_data_instance_type"      : "hadoop",
+    "interactions" : ["set_hadoop_as_traditional_namespace"],
+    "comment"                     : ""
+  },
+  "spark_bigdata_instance": {
+    "big_data_instance_type"      : "spark",
+    "interactions" : ["set_hadoop_as_traditional_namespace"],
+    "comment"                     : ""
+  },
+  "cassandra_bigdata_instance": {
+    "big_data_instance_type"      : "cassandra",
+    "interactions" : ["set_hadoop_as_traditional_namespace"],
+    "comment"                     : ""
+  },
+  "hadoop_instance_install": {
+    "interactions" : ["hadoop_bigdata_instance", "instance_install"]
+  },
+  "spark_instance_install": {
+    "interactions" : ["spark_bigdata_instance", "instance_install"]
+  },
+  "cassandra_instance_install": {
+    "interactions" : ["cassandra_bigdata_instance", "instance_install"]
+  },
+  "bigdata_instance_install": {
+    "interactions" : ["hadoop_instance_install", "spark_instance_install", "cassandra_instance_install"]
+  },
+  "service_cmd": {
+    "servicename"                 : "cmd",
+    "comment"                     : "restart_action"
+  },
+  "service_action": {
+    "shell_program"               : "service",
+    "interactions" : ["shell_program_servicename_action"],
+    "comment"                     : ""
+  },
+  "service_cmd_action": {
+    "interactions" : ["service_cmd", "service_action"],
+    "comment"                     : "e.g: restart_action,service_cmd_action"
+  },
+  "service_cmd_restart": {
+    "interactions" : ["restart_action", "service_cmd", "service_action"],
+    "comment"                     : ""
+  },
+  "computenodes_reboot": {
+    "command": [
+      { "literal"      : "pdsh -g computenode reboot" },
+      { "literal"      : " " },
+      { "literal"      : "" }
+    ],
+    "comment"                     : ""
+  },
+  "instance_clean_install": {
+    "interactions" : ["instance_clean_install_without_nodes_reboot_or_cmd_restart"],
+    "comment"                     : "alias"
+  },
+  "instance_clean_install_with_cmd_restart": {
+    "interactions" : ["instance_force_removal", "service_cmd_restart", "instance_install"],
+    "comment"                     : ""
+  },
+  "instance_clean_install_with_nodes_reboot": {
+    "interactions" : ["instance_force_removal", "computenodes_reboot", "instance_install"],
+    "comment"                     : ""
+  },
+  "instance_clean_install_without_nodes_reboot_or_cmd_restart": {
+    "interactions" : ["instance_force_removal", "instance_install"],
+    "comment"                     : ""
+  },
+  "hadoop_instance_clean_install": {
+    "interactions" : ["hadoop_bigdata_instance", "instance_clean_install"],
+    "comment"                     : ""
+  },
+  "spark_instance_clean_install": {
+    "interactions" : ["spark_bigdata_instance", "instance_clean_install"],
+    "comment"                     : ""
+  },
+  "cassandra_instance_clean_install": {
+    "interactions" : ["cassandra_bigdata_instance", "instance_clean_install"],
+    "comment"                     : ""
+  },
+  "bigdata_instance_clean_install_without_nodes_reboot_or_cmd_restart": {
+    "interactions" : ["instance_force_removal", "bigdata_instance_install"],
+    "comment"                     : ""
+  },
+  "bigdata_instance_clean_install_with_nodes_reboot": {
+    "interactions" : ["instance_force_removal", "computenodes_reboot", "bigdata_instance_install"],
+    "comment"                     : ""
+  },
+  "bigdata_instance_clean_install_with_cmd_restart": {
+    "interactions" : ["instance_force_removal", "computenodes_reboot", "bigdata_instance_install"],
+    "comment"                     : ""
+  },
+  "bigdata_instance_clean_install": {
+    "interactions" : ["bigdata_instance_clean_install_without_nodes_reboot_or_cmd_restart"],
+    "comment"                     : "alias"
+  },
+  "empty_instance" : {
+    "instance_name"     : "",
+    "download_url"      : "",
+    "filename"          : "",
+    "comment"                     : ""
+  },
+  "hadoop": {
+    "toolname"                    : "hadoop",
+    "comment"                     : ""
+  },
+  "hadoop-2.7.1": {
+    "tool_version"                : "2.7.1",
+    "hadoop_version"              : "2.7.1",
+    "interactions" : ["hadoop", "empty_namespace_tool_setup"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.1.tar.gz": {
+    "tool_tarball"                : "hadoop-2.7.1.tar.gz",
+    "tool_release"                : "2.7.1",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/hadoop-2.7.1.tar.gz",
+    "filename"                    : "hadoop-2.7.1.tar.gz", 
+    "interactions" : ["file_download", "hadoop-2.7.1"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hadoop-2.7.2": {
+    "tool_version"                : "2.7.2",
+    "hadoop_version"              : "2.7.2",
+    "interactions" : ["hadoop", "empty_namespace_tool_setup"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.2.tar.gz": {
+    "tool_tarball"                : "hadoop-2.7.2.tar.gz",
+    "tool_release"                : "2.7.2",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/hadoop-2.7.2.tar.gz",
+    "filename"                    : "hadoop-2.7.2.tar.gz", 
+    "interactions" : ["file_download", "hadoop-2.7.2"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hadoop-2.7.1-no_hbase_no_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-no_hbase_no_zk.xml",
+    "filename"          : "hadoop-2.7.1-no_hbase_no_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "set_hadoop271_nohb_nozk_ensemble": {
+    "node"                        : "$node",
+    "pre_command"                 : "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_bash_as_shell", "set_current_as_shell"],
+    "comment"                     : ""
+  },
+  "hadoop271_nohb_nozk_instance" : {
+    "instance_name"               : "hadoop271_nohb_nozk",
+    "interactions"                : ["hadoop-2.7.1.tar.gz", "hadoop-2.7.1-no_hbase_no_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.2-no_hbase_no_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.2-no_hbase_no_zk.xml",
+    "filename"          : "hadoop-2.7.2-no_hbase_no_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "hadoop272_nohb_nozk_instance" : {
+    "instance_name"               : "hadoop272_nohb_nozk",
+    "interactions"                : ["hadoop-2.7.2.tar.gz", "hadoop-2.7.2-no_hbase_no_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.1-no_hbase_with_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-no_hbase_with_zk.xml",
+    "filename"          : "hadoop-2.7.1-no_hbase_with_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "hadoop271_nohb_withzk_instance" : {
+    "instance_name"               : "hadoop271_nohb_withzk",
+    "interactions"                : ["zookeeper-3.4.6.tar.gz", "hadoop-2.7.1.tar.gz", "hadoop-2.7.1-no_hbase_with_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.2-no_hbase_with_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.2-no_hbase_with_zk.xml",
+    "filename"          : "hadoop-2.7.2-no_hbase_with_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "hadoop272_nohb_withzk_instance" : {
+    "instance_name"               : "hadoop272_nohb_withzk",
+    "interactions"                : ["zookeeper-3.4.6.tar.gz", "hadoop-2.7.2.tar.gz", "hadoop-2.7.2-no_hbase_with_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.1-with_hbase_with_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-with_hbase_with_zk.xml",
+    "filename"          : "hadoop-2.7.1-with_hbase_with_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "hadoop271_withhb_withzk_instance" : {
+    "instance_name"               : "hadoop271_withhb_withzk",
+    "interactions"                : ["zookeeper-3.4.6.tar.gz", "hbase-1.1.1-bin.tar.gz",  "hadoop-2.7.1.tar.gz", "hadoop-2.7.1-with_hbase_with_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "hadoop-2.7.2-with_hbase_with_zk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.2-with_hbase_with_zk.xml",
+    "filename"          : "hadoop-2.7.2-with_hbase_with_zk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "hadoop272_withhb_withzk_instance" : {
+    "instance_name"               : "hadoop272_withhb_withzk",
+    "interactions"                : ["zookeeper-3.4.6.tar.gz", "hbase-1.1.1-bin.tar.gz",  "hadoop-2.7.2.tar.gz", "hadoop-2.7.2-with_hbase_with_zk.xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+
+
+  "set_hadoop271_ha_nohb_nozk_ensemble": {
+    "node": "$node",
+    "pre_command": "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command": " ; done",
+    "interactions": [
+      "set_bash_as_shell",
+      "set_current_as_shell"
+    ],
+    "comment": ""
+  },
+  "hadoop271_ha_nohb_nozk_instance": {
+    "instance_name": "hadoop271_ha_nohb_nozk",
+    "interactions": [
+      "hadoop-2.7.1.tar.gz",
+      "hadoop-2.7.1-ha-no_hbase_no_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop271_ha_nohb_withzk_instance": {
+    "instance_name": "hadoop271_ha_nohb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hadoop-2.7.1.tar.gz",
+      "hadoop-2.7.1-ha-no_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop271_ha_withhb_withzk_instance": {
+    "instance_name": "hadoop271_ha_withhb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hbase-1.1.1-bin.tar.gz",
+      "hadoop-2.7.1.tar.gz",
+      "hadoop-2.7.1-ha-with_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.7.1-ha-no_hbase_no_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-ha-no_hbase_no_zk.xml",
+    "filename": "hadoop-2.7.1-ha-no_hbase_no_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.7.1-ha-no_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-ha-no_hbase_with_zk.xml",
+    "filename": "hadoop-2.7.1-ha-no_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.7.1-ha-with_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.7.1-ha-with_hbase_with_zk.xml",
+    "filename": "hadoop-2.7.1-ha-with_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+
+
+  "hadoop-2.2.0": {
+    "tool_version": "2.2.0",
+    "hadoop_version"            : "2.2.0",
+    "interactions" : ["hadoop", "empty_namespace_tool_setup"],
+    "comment": ""
+  },
+  "hadoop-2.2.0-no_hbase_no_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.2.0-no_hbase_no_zk.xml",
+    "filename": "hadoop-2.2.0-no_hbase_no_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.2.0-no_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.2.0-no_hbase_with_zk.xml",
+    "filename": "hadoop-2.2.0-no_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop220_nohb_nozk_instance": {
+    "instance_name": "hadoop220_nohb_nozk",
+    "interactions": [
+      "hadoop-2.2.0.tar.gz",
+      "hadoop-2.2.0-no_hbase_no_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop220_nohb_withzk_instance": {
+    "instance_name": "hadoop220_nohb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hadoop-2.2.0.tar.gz",
+      "hadoop-2.2.0-no_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.2.0.tar.gz": {
+    "tool_tarball": "hadoop-2.2.0.tar.gz",
+    "tool_release": "2.2.0",
+    "download_url": "http://support.brightcomputing.com/bigdata/hadoop-2.2.0.tar.gz",
+    "filename": "hadoop-2.2.0.tar.gz",
+    "interactions": [
+      "file_download",
+      "hadoop-2.2.0"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hadoop-2.2.0-with_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.2.0-with_hbase_with_zk.xml",
+    "filename": "hadoop-2.2.0-with_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop220_withhb_withzk_instance": {
+    "instance_name": "hadoop220_withhb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hbase-1.1.1-bin.tar.gz",
+      "hadoop-2.2.0.tar.gz",
+      "hadoop-2.2.0-with_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.3.0": {
+    "tool_version": "2.3.0",
+    "hadoop_version"            : "2.3.0",
+    "interactions" : ["hadoop", "empty_namespace_tool_setup"],
+    "comment": ""
+  },
+  "hadoop-2.3.0-no_hbase_no_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.3.0-no_hbase_no_zk.xml",
+    "filename": "hadoop-2.3.0-no_hbase_no_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.3.0-no_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.3.0-no_hbase_with_zk.xml",
+    "filename": "hadoop-2.3.0-no_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop230_nohb_nozk_instance": {
+    "instance_name": "hadoop230_nohb_nozk",
+    "interactions": [
+      "hadoop-2.3.0.tar.gz",
+      "hadoop-2.3.0-no_hbase_no_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop230_nohb_withzk_instance": {
+    "instance_name": "hadoop230_nohb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hadoop-2.3.0.tar.gz",
+      "hadoop-2.3.0-no_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-2.3.0.tar.gz": {
+    "tool_tarball": "hadoop-2.3.0.tar.gz",
+    "tool_release": "2.3.0",
+    "download_url": "http://support.brightcomputing.com/bigdata/hadoop-2.3.0.tar.gz",
+    "filename": "hadoop-2.3.0.tar.gz",
+    "interactions": [
+      "file_download",
+      "hadoop-2.3.0"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hadoop-2.3.0-with_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-2.3.0-with_hbase_with_zk.xml",
+    "filename": "hadoop-2.3.0-with_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop230_withhb_withzk_instance": {
+    "instance_name": "hadoop230_withhb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hbase-1.1.1-bin.tar.gz",
+      "hadoop-2.3.0.tar.gz",
+      "hadoop-2.3.0-with_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-3.0.0-alpha1": {
+    "tool_version": "3.0.0-alpha1",
+    "hadoop_version"            : "3.0.0-alpha1",
+    "interactions": [
+      "hadoop"
+    ],
+    "comment": ""
+  },
+  "hadoop-3.0.0-no_hbase_no_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-3.0.0-no_hbase_no_zk.xml",
+    "filename": "hadoop-3.0.0-no_hbase_no_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop-3.0.0-no_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-3.0.0-no_hbase_with_zk.xml",
+    "filename": "hadoop-3.0.0-no_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop300_nohb_nozk_instance": {
+    "instance_name": "hadoop300_nohb_nozk",
+    "interactions": [
+      "hadoop-3.0.0-alpha1.tar.gz",
+      "hadoop-3.0.0-no_hbase_no_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop300_nohb_withzk_instance": {
+    "instance_name": "hadoop300_nohb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hadoop-3.0.0-alpha1.tar.gz",
+      "hadoop-3.0.0-no_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "hadoop-3.0.0-alpha1.tar.gz": {
+    "tool_tarball": "hadoop-3.0.0-alpha1.tar.gz",
+    "tool_release": "3.0.0-alpha1",
+    "download_url": "http://support.brightcomputing.com/bigdata/hadoop-3.0.0-alpha1.tar.gz",
+    "filename": "hadoop-3.0.0-alpha1.tar.gz",
+    "interactions": [
+      "file_download",
+      "hadoop-3.0.0-alpha1"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hadoop-3.0.0-with_hbase_with_zk.xml": {
+    "download_url": "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/hadoop-3.0.0-with_hbase_with_zk.xml",
+    "filename": "hadoop-3.0.0-with_hbase_with_zk.xml",
+    "interactions": [
+      "file_download"
+    ],
+    "comment": ""
+  },
+  "hadoop300_withhb_withzk_instance": {
+    "instance_name": "hadoop300_withhb_withzk",
+    "interactions": [
+      "zookeeper-3.4.6.tar.gz",
+      "hbase-1.1.1-bin.tar.gz",
+      "hadoop-3.0.0-alpha1.tar.gz",
+      "hadoop-3.0.0-with_hbase_with_zk.xml",
+      "hadoop_bigdata_instance"
+    ],
+    "comment": ""
+  },
+  "nozk.xml" : {
+    "interactions"      : ["nozk_xml"],
+    "comment"                     : "alias"
+  },
+  "nozk_xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/Nozk.xml",
+    "filename"          : "nozk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+  "nozk_instance" : {
+    "instance_name"               : "nozk",
+    "interactions"                : ["hadoop-2.7.2.tar.gz", "nozk_xml", "hadoop_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "prefix=/root/" : {
+    "workdir_prefix"              : "/root/",
+    "runtime_testing_helpers_script_location_prefix" : "/root/",
+    "bigdata_python_includedir_prefix"               : "/root/",
+    "setup_script_path_prefix"    : "/root/",
+    "comment"                     : ""
+  },
+  "7.3_cluster-tools_workingdir" : {
+    "workdir"           : "cluster-tools/braches/7.3/cluster-tools_files/hadoop/tools/",
+    "runtime_testing_helpers_script_location" : "cluster-tools/branches/7.3/cluster-tools_files/hadoop/tools/runtime_testing/runtime_testing_helpers.sh",
+    "bigdata_python_includedir"               : "cluster-tools/branches/7.3/cluster-tools_files/hadoop",
+    "setup_script_path" : "cluster-tools/branches/7.3/cluster-tools_files/hadoop/",
+    "comment"                                 : ""
+  },
+  "trunk_cluster-tools_workingdir" : {
+    "workdir"           : "cluster-tools/trunk/cluster-tools_files/hadoop/tools/",
+    "runtime_testing_helpers_script_location" : "cluster-tools/trunk/cluster-tools_files/hadoop/tools/runtime_testing/runtime_testing_helpers.sh",
+    "bigdata_python_includedir"               : "cluster-tools/trunk/cluster-tools_files/hadoop",
+    "setup_script_path" : "cluster-tools/trunk/cluster-tools_files/hadoop/",
+    "comment"                                 : ""
+  },
+  "git_cluster-tools_workingdir" : {
+    "workdir"           : "cluster-tools/cluster-tools_files/hadoop/tools/",
+    "runtime_testing_helpers_script_location" : "cluster-tools/cluster-tools_files/hadoop/tools/runtime_testing/runtime_testing_helpers.sh",
+    "bigdata_python_includedir"               : "cluster-tools/cluster-tools_files/hadoop",
+    "setup_script_path" : "cluster-tools/cluster-tools_files/hadoop/",
+    "comment"                                 : ""
+  },
+  "workingdir_svn_trunk" : {
+    "interactions" : ["prefix=/root/", "trunk_cluster-tools_workingdir"],
+    "comment"                                 : ""
+  },
+  "workingdir_svn_7.3" : {
+    "interactions" : ["prefix=/root/", "7.3_cluster-tools_workingdir"],
+    "comment"                                 : ""
+  },
+  "git_checkout_previous_branch": {
+    "command": [
+      { "literal"      : "git checkout @{-1}" }
+    ]
+  },
+  "git_stash": {
+    "command": [
+      { "literal"      : "git stash " }
+    ]
+  },
+  "git_stash_pop": {
+    "command": [
+      { "literal"      : "git stash pop " }
+    ]
+  },
+  "git_pop_previous_branch": {
+    "interactions" : ["git_checkout_previous_branch", "git_stash_pop"],
+    "comment"                                 : ""
+  },
+  "git_branch": {
+    "command": [
+      { "literal"      : "git branch " }
+    ]
+  },
+  "git_branch_all": {
+    "command": [
+      { "literal"      : "git branch -a " }
+    ]
+  },
+
+  "git_checkout_branch": {
+    "command": [
+      { "literal"      : "git branch " },
+      { "replace"      : "git_branch" },
+      { "literal"      : "; git checkout " },
+      { "replace"      : "git_branch" }
+    ]
+  },
+  "branch_master": {
+    "git_branch"                              : "master",
+    "comment"                                 : ""
+  },
+  "git_checkout_master": {
+    "interactions" : ["branch_master", "git_checkout_branch"],
+    "comment"                                 : ""
+  },
+  "branch_ribamar": {
+    "git_branch"                              : "ribamar",
+    "comment"                                 : ""
+  },
+  "git_checkout_ribamar": {
+    "interactions" : ["branch_ribamar", "git_checkout_branch"],
+    "comment"                                 : ""
+  },
+  "branch_7.3": {
+    "git_branch"                              : "7.3",
+    "comment"                                 : ""
+  },
+  "git_checkout_7.3": {
+    "interactions" : ["branch_7.3", "git_checkout_branch"],
+    "comment"                                 : ""
+  },
+  "workingdir" : {
+    "interactions" : ["prefix=/root/", "git_cluster-tools_workingdir"],
+    "comment"                                 : "this interaction presumes 2 things: the project is cluster-tools and the correct branch is selected (the latter may diverge from the previous behaviour). it should be deprecated."
+  },
+  "hadoop_nozk_instance_clean_install" : {
+    "interactions" : ["nozk_instance", "file_download", "hadoop_instance_clean_install"]
+  },
+  "workingdir_hadoop_nozk_instance_clean_install" : {
+    "interactions" : ["workingdir", "hadoop_nozk_instance_clean_install"]
+  },
+  "empty_namespace_tool_setup": {
+    "setup_namespace"      : "",
+    "comment"                     : ""
+  },
+  "hadoop_namespace_tool_setup": {
+    "setup_namespace"      : "hadoop",
+    "comment"                     : ""
+  },
+  "set_tarball_option_minus_t": {
+    "tarball_option"       : "-t",
+    "comment"                     : ""
+  },
+  "set_tool_javahome_options_empty": {
+    "tool_javahome_options"       : "  ",
+    "comment"                     : ""
+  },
+  "set_tool_connector_options_empty": {
+    "tool_connector_options"      : "  ",
+    "comment"                     : ""
+  },
+  "set_tool_complementary_options_empty": {
+    "tool_complementary_options"  : "  ",
+    "comment"                     : ""
+  },
+  "tool_options_clear" : {
+    "interactions" : ["set_tool_connector_options_empty", "set_tool_javahome_options_empty", "set_tool_complementary_options_empty", "set_tarball_empty"]
+  },
+  "set_tarball_empty": {
+    "tarball_option"       : "  ",
+    "tool_tarball"         : "  ",
+    "comment"                     : ""
+  },
+  "set_tool_setup_option_install": {
+    "toolsetupoption"      : "-i",
+    "interactions" : ["set_tarball_option_minus_t"],
+    "comment"                     : ""
+  },
+  "set_tool_setup_option_uninstall": {
+    "toolsetupoption"      : "-u",
+    "comment"                     : ""
+  },
+  "set_tool_setup_option_upgrade": {
+    "toolsetupoption"      : "-U",
+    "interactions" : ["set_tarball_option_minus_t"],
+    "tags"         : ["misleading_interaction_name"],
+    "comment"                     : ""
+  },
+  "set_tool_setup_option_update": {
+    "toolsetupoption"      : "--update",
+    "interactions" : ["set_tarball_option_minus_t"],
+    "comment"                     : ""
+  },
+  "set_tool_setup_option_update_explicit": {
+    "interactions" : ["set_tool_setup_option_update"],
+    "comment"                     : "many interactions _upgrade were created when they actually meant _update, but they shall not change behaviour. so, _explicit versions."
+  },
+  "set_tool_setup_option_upgrade_explicit": {
+    "toolsetupoption"      : "--upgrade",
+    "interactions" : ["set_tarball_option_minus_t"],
+    "comment"                     : ""
+  },
+  "tool_setup_tests": {
+    "interactions" : ["tool_smoke_test", "bigdata_check_service_files_using_defaults", "hadoop_and_tool_version", "tool_run_version", "cmsh_instance_overview_grep_toolname"],
+    "comment"                     : ""
+  },
+  "tool_install": {
+    "interactions" : ["set_tool_setup_option_install", "tool_setup", "tool_setup_tests"],
+    "comment"                     : ""
+  },
+  "tool_upgrade": {
+    "interactions" : ["set_tool_setup_option_upgrade", "tool_setup", "tool_setup_tests"],
+    "tags"         : ["misleading_interaction_name"],
+    "comment"                     : ""
+  },
+  "tool_upgrade_explicit": {
+    "interactions" : ["set_tool_setup_option_upgrade_explicit", "tool_setup", "tool_setup_tests"],
+    "comment"                     : ""
+  },
+  "tool_update": {
+    "interactions" : ["set_tool_setup_option_update", "tool_setup", "tool_setup_tests"],
+    "comment"                     : ""
+  },
+  "tool_uninstall": {
+    "interactions" : ["set_tool_setup_option_uninstall", "tool_setup", "tool_setup_tests"],
+    "comment"                     : ""
+  },
+
+  "empty_ensemble": {
+    "node"                        : "",
+    "pre_command"                 : "",
+    "post_command"                : "",
+    "interactions" : ["set_current_as_shell"],
+    "comment"                     : ""
+  },
+  "set_empty_ensemble": {
+    "interactions" : ["empty_ensemble"],
+    "comment"                     : "alias"
+  },
+  "set_headnode_ensemble": {
+    "node"                        : "localhost",
+    "pre_command"                 : " ",
+    "post_command"                : " ",
+    "interactions" : ["set_bash_as_shell"],
+    "comment"                     : ""
+  },
+  "current_as_shell": {
+    "shell_command"               : "",
+    "comment"                     : ""
+  },
+  "set_current_as_shell": {
+    "interactions" : ["current_as_shell"],
+    "comment"                     : "alias"
+  },
+  "set_bash_as_shell": {
+    "shell_command"               : "/bin/bash -c ",
+    "comment"                     : ""
+  },
+  "set_ssh_as_shell": {
+    "shell_command"               : "ssh ",
+    "comment"                     : ""
+  },
+
+
+
+  "section__objects_for_spark" : {
+  },
+
+  "spark": {
+    "toolname"                    : "spark",
+    "interactions" : ["empty_namespace_tool_setup"],
+    "comment"                     : ""
+  },
+  "set_spark_tool_setup": {
+    "namespace"                   : "",
+    "tool_complementary_options"  : "",
+    "tool_connector_options"      : "",
+    "tool_javahome_options"       : "",
+    "run_version_command"         : "module load spark ; spark-shell  --version ; module rm spark ",
+    "tool_command"                : "spark-shell  --version",
+    "interactions" : ["spark", "empty_namespace_tool_setup"],
+    "comment"                     : "namespace and tool_complementary_options, including tool_connector_options must be empty"
+  },
+  "set_spark_hosts_node001..node005": {
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "set_spark_basic_ensemble": {
+    "node": "$node",
+    "pre_command"                 : "for node in node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell", "set_spark_hosts_node001..node005"],
+    "comment": ""
+  },
+  "spark_tool_install": {
+    "interactions" : ["set_spark_tool_setup", "tool_install"],
+    "comment"                     : ""
+  },
+  "spark_tool_uninstall": {
+    "interactions" : ["set_spark_tool_setup", "tool_uninstall"],
+    "comment"                     : ""
+  },
+  "spark_tool_upgrade": {
+    "interactions" : ["set_spark_tool_setup", "tool_upgrade"],
+    "comment"                     : ""
+  },
+  "spark_run_version": {
+    "interactions" : ["set_spark_tool_setup", "tool_run_version"],
+    "comment"                     : ""
+  },
+  "spark_tool_install_and_test": {
+    "interactions" : ["set_spark_tool_setup", "module_rm", "spark_tool_install", "module_load", "spark_run_version"],
+    "comment"                     : ""
+  },
+  "spark_tool_run_ready": {
+    "interactions" : ["set_spark_tool_setup", "module_rm", "spark_tool_uninstall", "spark_tool_install", "module_load", "spark_run_version"],
+    "comment"                     : ""
+  },
+  "spark_tool_upgrade_run_ready": {
+    "interactions" : ["set_spark_tool_setup", "module_rm", "spark_tool_upgrade", "module_load", "spark_run_version"],
+    "comment"                     : ""
+  },
+  "spark-1.5.1": {
+    "tool_version"                : "1.5.1",
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "spark-1.6.0": {
+    "tool_version"                : "1.6.0",
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "spark-2.0.1": {
+    "tool_version"                : "2.0.1",
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "spark-2.0.2": {
+    "tool_version"                : "2.0.2",
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "spark-2.1.0": {
+    "tool_version"                : "2.1.0",
+    "interactions" : ["set_spark_tool_setup"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6": {
+    "tool_tarball"                : "spark-1.5.1-bin-hadoop2.6.tgz",
+    "tool_release"                : "1.5.1-bin-hadoop2.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/spark-1.5.1-bin-hadoop2.6.tgz",
+    "filename"                    : "spark-1.5.1-bin-hadoop2.6.tgz", 
+    "interactions" : ["file_download", "spark-1.5.1"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "spark-1.5.1-bin-hadoop2.6.tgz": {
+    "interactions" : ["spark_1.5.1-bin-hadoop2.6"],
+    "comment"                     : "alias"
+  },
+  "spark_1.6.0-bin-hadoop2.6": {
+    "tool_tarball"                : "spark-1.6.0-bin-hadoop2.6.tgz",
+    "tool_release"                : "1.6.0-bin-hadoop2.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/spark-1.6.0-bin-hadoop2.6.tgz",
+    "filename"                    : "spark-1.6.0-bin-hadoop2.6.tgz", 
+    "interactions" : ["file_download", "spark-1.6.0"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "spark-1.6.0-bin-hadoop2.6.tgz": {
+    "interactions" : ["spark_1.6.0-bin-hadoop2.6"],
+    "comment"                     : "alias"
+  },
+  "spark_2.0.1-bin-hadoop2.6": {
+    "tool_tarball"                : "spark-2.0.1-bin-hadoop2.6.tgz",
+    "tool_release"                : "2.0.1-bin-hadoop2.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/spark-2.0.1-bin-hadoop2.6.tgz",
+    "filename"                    : "spark-2.0.1-bin-hadoop2.6.tgz", 
+    "interactions" : ["file_download", "spark-2.0.1"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "spark-2.0.1-bin-hadoop2.6.tgz": {
+    "interactions" : ["spark_2.0.1-bin-hadoop2.6"],
+    "comment"                     : "alias"
+  },
+  "spark_2.1.0-bin-hadoop2.6": {
+    "tool_tarball"                : "spark-2.1.0-bin-hadoop2.6.tgz",
+    "tool_release"                : "2.1.0-bin-hadoop2.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/spark-2.1.0-bin-hadoop2.6.tgz",
+    "filename"                    : "spark-2.1.0-bin-hadoop2.6.tgz", 
+    "interactions" : ["file_download", "spark-2.1.0"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "spark-2.1.0-bin-hadoop2.6.tgz": {
+    "interactions" : ["spark_2.1.0-bin-hadoop2.6"],
+    "comment"                     : "alias"
+  },
+  "spark_2.0.2-bin-hadoop2.6": {
+    "tool_tarball"                : "spark-2.0.2-bin-hadoop2.6.tgz",
+    "tool_release"                : "2.0.2-bin-hadoop2.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/spark-2.0.2-bin-hadoop2.6.tgz",
+    "filename"                    : "spark-2.0.2-bin-hadoop2.6.tgz", 
+    "interactions" : ["file_download", "spark-2.0.2"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "spark-2.0.2-bin-hadoop2.6.tgz": {
+    "interactions" : ["spark_2.0.2-bin-hadoop2.6"],
+    "comment"                     : "alias"
+  },
+  "spark_1.5.1-bin-hadoop2.6_install_and_test": {
+    "interactions" : ["workingdir", "spark_1.5.1-bin-hadoop2.6", "spark_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_install_and_test": {
+    "interactions" : ["workingdir", "spark_1.6.0-bin-hadoop2.6", "spark_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_run_ready": {
+    "interactions" : ["workingdir", "spark_1.5.1-bin-hadoop2.6", "spark_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_run_ready": {
+    "interactions" : ["workingdir", "spark_1.6.0-bin-hadoop2.6", "spark_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready": {
+    "interactions" : ["workingdir", "spark_1.5.1-bin-hadoop2.6", "spark_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready": {
+    "interactions" : ["workingdir", "spark_1.6.0-bin-hadoop2.6", "spark_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+
+  "section__simulation_objects" : {
+    "comment"                     : "objects for causing non functional effects, like making hadoop non upgradable for testing, e.g"
+  },
+
+  "simulate:make_hadoop_non_upgradable": {
+    "interactions" : ["namenode", "mv_current_edits_to_/tmp/"]
+  },
+
+  "simulate:make_hadoop_non_upgradable_irreversible": {
+    "interactions" : ["simulate:make_hadoop_non_upgradable"],
+    "comment"                     : "alias"
+  },
+
+  "simulate:make_hadoop_non_upgradable_reversible": {
+    "interactions" : ["namenode", "tar_and_remove_/var/lib/hadoop/"]
+  },
+
+  "simulate:revert_make_hadoop_non_upgradable_reversible": {
+    "interactions" : ["namenode", "tar_extract_/var/lib/hadoop/", "cmsh_bigdata_instance_restartallservices_safemode_wait", "dfsadmin_safemode_enter_hdfs_command", "dfsadmin_safemode_leave_hdfs_command"]
+  },
+
+  "simulate:make_hadoop_non_upgradable_revert": {
+    "interactions" : ["simulate:revert_make_hadoop_non_upgradable_reversible"],
+    "comment"                     : "alias"
+  },
+
+
+
+  "section__objects_for_spark_on_nozk_instance_or_empty_instance" : {
+  },
+
+  "spark_1.5.1-bin-hadoop2.6_run_ready_on_empty": {
+    "interactions" : ["empty_instance", "spark_1.5.1-bin-hadoop2.6_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_run_ready_on_empty": {
+    "interactions" : ["empty_instance", "spark_1.6.0-bin-hadoop2.6_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "spark_1.5.1-bin-hadoop2.6_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "spark_1.6.0-bin-hadoop2.6_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready_on_empty": {
+    "interactions" : ["empty_instance", "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready_on_empty": {
+    "interactions" : ["empty_instance", "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_spark_1.5.1-bin-hadoop2.6_run_ready": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "spark_1.5.1-bin-hadoop2.6_run_ready"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_spark_1.5.1-bin-hadoop2.6_run_ready_upgrade_to_spark_1.6.0-bin-hadoop2.6": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "spark_1.5.1-bin-hadoop2.6_install_and_test", "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+
+  "section__objects_for_sparkStandalone" : {
+  },
+
+  "sparkStandalone.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/sparkStandalone.xml",
+    "filename"          : "sparkStandalone.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+ "set_sparkStandalone_instance_ensemble": {
+    "node"                        : "$node",
+    "pre_command"                 : "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_instance" : {
+    "instance_name"     : "sparkStandalone",
+    "interactions" : ["set_sparkStandalone_instance_ensemble", "spark-1.5.1-bin-hadoop2.6.tgz", "sparkStandalone.xml", "spark_bigdata_instance"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_instance_clean_install" : {
+    "interactions" : ["sparkStandalone_instance", "file_download", "bigdata_instance_clean_install"],
+    "comment"                     : ""
+  },
+  "workingdir_sparkStandalone_instance_clean_install" : {
+    "interactions" : ["workingdir", "sparkStandalone_instance_clean_install"]
+  },
+  "sparkStandalone_clean_install_with_spark_1.5.1-bin-hadoop2.6_install_and_test": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "spark_1.5.1-bin-hadoop2.6_install_and_test"],
+    "comment"                     : "this setup will naturally fail, since you can't install spark on a spark bigdata instance",
+    "comment"                     : ""
+  },
+  "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "spark_1.5.1-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_clean_install_with_spark_1.5.1-bin-hadoop2.6_run_ready_upgrade_to_spark_1.6.0-bin-hadoop2.6": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "spark_1.5.1-bin-hadoop2.6_install_and_test", "spark_1.6.0-bin-hadoop2.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+  "sparkStandalone201.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/sparkStandalone201.xml",
+    "filename"          : "sparkStandalone201.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+ "set_sparkStandalone201_instance_ensemble": {
+    "node"                        : "$node",
+    "pre_command"                 : "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell"],
+    "comment"                     : ""
+  },
+  "sparkStandalone201_instance" : {
+    "instance_name"     : "sparkStandalone201",
+    "interactions" : ["set_sparkStandalone201_instance_ensemble", "spark-2.0.1-bin-hadoop2.6.tgz", "sparkStandalone201.xml", "spark_bigdata_instance"],
+    "comment"                     : ""
+  },
+
+  "sparkStandalone202.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/sparkStandalone202.xml",
+    "filename"          : "sparkStandalone202.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+ "set_sparkStandalone202_instance_ensemble": {
+    "node"                        : "$node",
+    "pre_command"                 : "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell"],
+    "comment"                     : ""
+  },
+  "sparkStandalone202_instance" : {
+    "instance_name"     : "sparkStandalone202",
+    "interactions" : ["set_sparkStandalone202_instance_ensemble", "spark-2.0.2-bin-hadoop2.6.tgz", "sparkStandalone202.xml", "spark_bigdata_instance"],
+    "comment"                     : ""
+  },
+
+
+  "section__objects_for_zookeeper" : {
+  },
+
+  "zookeeper": {
+    "toolname"                    : "zookeeper",
+    "hadoopcommon_role_list"      : "hadoopcommon.ZOOKEEPER_ROLE",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment"                     : ""
+  },
+  "set_zookeeper_tool_setup": {
+    "run_version_command"         : "module rm zookeeper ; module load zookeeper ;  echo quit |  zkCli.sh | grep zookeeper.version ; module rm zookeeper " ,
+    "tool_command"                : "echo quit |  zkCli.sh | grep zookeeper.version",
+    "interactions" : ["zookeeper", "hadoop_namespace_tool_setup"],
+    "comment"                     : "note: tool_complementary_options must be set."
+  },
+  "zookeeper_tool_install": {
+    "interactions" : ["set_zookeeper_tool_setup", "tool_install"],
+    "comment"                     : ""
+  },
+  "zookeeper_tool_uninstall": {
+    "interactions" : ["set_zookeeper_tool_setup", "tool_uninstall"],
+    "comment"                     : ""
+  },
+  "zookeeper_tool_upgrade": {
+    "interactions" : ["set_zookeeper_tool_setup", "tool_upgrade"],
+    "comment"                     : ""
+  },
+  "zookeeper_run_version": {
+    "interactions" : ["set_spark_tool_setup", "tool_run_version"],
+    "comment"                     : ""
+  },
+  "zookeeper_tool_install_and_test": {
+    "interactions" : ["set_zookeeper_tool_setup", "module_rm", "zookeeper_tool_install", "module_load", "zookeeper_run_version"],
+    "comment"                     : ""
+  },
+  "zookeeper_tool_run_ready": {
+    "interactions" : ["set_zookeeper_tool_setup", "module_rm", "zookeeper_tool_uninstall", "zookeeper_tool_install", "module_load", "zookeeper_run_version"],
+    "comment"                     : ""
+  },
+  "zookeeper_tool_upgrade_run_ready": {
+    "interactions" : ["set_zookeeper_tool_setup", "module_rm", "zookeeper_tool_upgrade", "module_load", "zookeeper_run_version"],
+    "comment"                     : ""
+  },
+  "set_zookeeper_hosts_node001..node003": {
+    "tool_complementary_options"  : " --hosts  node001..node003 ",
+    "tool_connector_options"      : "",
+    "tool_javahome_options"       : "",
+    "interactions" : ["set_zookeeper_tool_setup"],
+    "comment"                     : ""
+  },
+  "set_zookeeper_basic_ensemble": {
+    "role_purpose"                : "zookeeper",
+    "node"                        : "$node",
+    "pre_command"                 : "for node in node001 node002 node003 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell", "set_zookeeper_hosts_node001..node003"],
+    "comment"                     : ""
+  },
+
+
+  "zookeeper-3.4.6": {
+    "tool_version"                : "3.4.6",
+    "interactions" : ["set_zookeeper_tool_setup"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8": {
+    "tool_version"                : "3.4.8",
+    "interactions" : ["set_zookeeper_tool_setup"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_tarball": {
+    "tool_tarball"                : "zookeeper-3.4.6.tar.gz",
+    "tool_release"                : "3.4.6",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/zookeeper-3.4.6.tar.gz",
+    "filename"                    : "zookeeper-3.4.6.tar.gz", 
+    "interactions" : ["file_download", "zookeeper-3.4.6"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "zookeeper-3.4.6.tar.gz": {
+    "interactions" : ["zookeeper-3.4.6_tarball"],
+    "comment"                     : "alias"
+  },
+  "zookeeper-3.4.8_tarball": {
+    "tool_tarball"                : "zookeeper-3.4.8.tar.gz",
+    "tool_release"                : "3.4.8",
+    "download_url"                : "http://support.brightcomputing.com/bigdata/zookeeper-3.4.8.tar.gz",
+    "filename"                    : "zookeeper-3.4.8.tar.gz", 
+    "interactions" : ["file_download", "zookeeper-3.4.8"],
+    "comment"                     : "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "zookeeper-3.4.8.tar.gz": {
+    "interactions" : ["zookeeper-3.4.8_tarball"],
+    "comment"                     : "alias"
+  },
+  "zookeeper-3.4.6_install_and_test": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "zookeeper_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_install_and_test": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "zookeeper_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_run_ready": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "zookeeper_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "zookeeper_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "zookeeper_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "zookeeper_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+  "zookeeper-3.4.6_install_and_test_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_install_and_test_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_install_and_test"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.6_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir", "zookeeper-3.4.8_tarball", "set_zookeeper_basic_ensemble", "zookeeper_tool_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+
+  "section__objects_for_zookeeper_on_nozk_instance" : {
+  },
+
+
+  "zookeeper-3.4.6_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.6_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.8_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready_on_nozk": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.8_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "zookeeper-3.4.6_run_ready"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "zookeeper-3.4.6_install_and_test", "zookeeper-3.4.8_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+
+
+
+  "section__objects_for_zookeeper_on_nozk_instance_with_basic_ensemble" : {
+  },
+
+
+  "zookeeper-3.4.6_run_ready_on_nozk_with_basic_ensemble": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.6_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready_on_nozk_with_basic_ensemble": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.8_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready_on_nozk_with_basic_ensemble": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.6_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready_on_nozk_with_basic_ensemble": {
+    "interactions" : ["nozk_instance", "zookeeper-3.4.8_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "zookeeper-3.4.6_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8_with_basic_ensemble": {
+    "interactions" : ["workingdir_hadoop_nozk_instance_clean_install", "zookeeper-3.4.6_install_and_test_with_basic_ensemble", "zookeeper-3.4.8_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+
+
+
+  "section__objects_for_zookeeper_on_sparkStandalone_instance_with_basic_ensemble" : {
+  },
+
+
+  "zookeeper-3.4.6_run_ready_on_sparkStandalone_with_basic_ensemble": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.6_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready_on_sparkStandalone_with_basic_ensemble": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.8_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready_on_sparkStandalone_with_basic_ensemble": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.6_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready_on_sparkStandalone_with_basic_ensemble": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.8_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_clean_install_with_zookeeper-3.4.6_run_ready_with_basic_ensemble": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "zookeeper-3.4.6_run_ready_with_basic_ensemble"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8_with_basic_ensemble": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "zookeeper-3.4.6_install_and_test_with_basic_ensemble", "zookeeper-3.4.8_upgrade_run_ready_with_basic_ensemble"],
+    "comment"                     : "very similar to hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8, changing only the instance"
+  },
+
+
+
+  "section__objects_for_zookeeper_on_sparkStandalone_instance" : {
+  },
+
+
+  "zookeeper-3.4.6_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.6_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.8_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.6_upgrade_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.6_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "zookeeper-3.4.8_upgrade_run_ready_on_sparkStandalone": {
+    "interactions" : ["sparkStandalone_instance", "zookeeper-3.4.8_upgrade_run_ready"],
+    "comment"                     : ""
+  },
+  "hadoop_sparkStandalone_clean_install_with_zookeeper-3.4.6_run_ready": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "zookeeper-3.4.6_run_ready"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8": {
+    "interactions" : ["workingdir_sparkStandalone_instance_clean_install", "zookeeper-3.4.6_install_and_test", "zookeeper-3.4.8_upgrade_run_ready"],
+    "comment"                     : "very similar to hadoop_nozk_clean_install_with_zookeeper-3.4.6_run_ready_upgrade_to_zookeeper-3.4.8, changing only the instance"
+  },
+
+
+
+
+
+  "section__objects_for_sparkStandalone_withzk" : {
+  },
+
+  "sparkStandalone_withzk.xml" : {
+    "download_url"      : "https://raw.githubusercontent.com/Bright-Computing/interactions/master/bigdata_instances_xmls/sparkStandalone_withzk.xml",
+    "filename"          : "sparkStandalone_withzk.xml",
+    "interactions"      : ["file_download"],
+    "comment"                     : ""
+  },
+ "set_sparkStandalone_withzk_instance_ensemble": {
+    "node"                        : "$node",
+    "pre_command"                 : "for node in  localhost node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "interactions" : ["set_ssh_as_shell"],
+    "comment"                     : ""
+  },
+  "sparkStandalone_withzk_instance" : {
+    "instance_name"     : "sparkStandalone_withzk",
+    "interactions" : ["zookeeper-3.4.6.tar.gz", "set_zookeeper_basic_ensemble", "set_sparkStandalone_withzk_instance_ensemble", "spark-1.5.1-bin-hadoop2.6.tgz", "sparkStandalone_withzk.xml", "spark_bigdata_instance"],
+    "comment"                     : ""
+  },
+
+
+
+
+  "section__objects_for_hbase" : {
+  },
+
+
+  "set_hbase_basic_ensemble": {
+    "node": "$node",
+    "pre_command": "for node in node001 node002 node003 node004 node005 ; do echo ; echo node=$node ;",
+    "post_command": " ; done",
+    "interactions": [
+      "set_ssh_as_shell",
+      "set_hbase_hosts_node001..node005",
+      "set_hbase_tool_setup"
+    ],
+    "comment": ""
+  },
+  "set_hbase_hosts_node001..node005": {
+    "tool_complementary_options": " --master node005 --rservers node001..node004 ",
+    "tool_connector_options"      : "",
+    "tool_javahome_options"       : "",
+    "comment": ""
+  },
+  "set_hbase_tool_setup": {
+    "run_version_command": "module rm hbase ; module load hbase ;  echo 'list ; create \"table_creation_test\", \"whatever\" ; list' | hbase shell ; module rm hbase #TODO: drop table ",
+    "tool_command"                : "echo 'list ; create \"table_creation_test\", \"whatever\" ; list' | hbase shell", 
+    "interactions": [
+      "hbase",
+      "hadoop_namespace_tool_setup"
+    ],
+    "comment": "note: tool_complementary_options must be set."
+  },
+  "hbase": {
+    "toolname": "hbase",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+  "hbase-1.1.1": {
+    "tool_version": "1.1.1",
+    "interactions": [
+      "set_hbase_tool_setup"
+    ],
+    "comment": ""
+  },
+  "hbase-1.1.1-bin.tar.gz": {
+    "tool_tarball": "hbase-1.1.1-bin.tar.gz",
+    "tool_release": "1.1.1-bin",
+    "download_url": "http://support.brightcomputing.com/bigdata/hbase-1.1.1-bin.tar.gz",
+    "filename": "hbase-1.1.1-bin.tar.gz",
+    "interactions": [
+      "file_download",
+      "hbase-1.1.1"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hbase-1.2.0": {
+    "tool_version": "1.2.0",
+    "interactions": [
+      "set_hbase_tool_setup"
+    ],
+    "comment": ""
+  },
+  "hbase-1.2.0-bin.tar.gz": {
+    "tool_tarball": "hbase-1.2.0-bin.tar.gz",
+    "tool_release": "1.2.0-bin",
+    "download_url": "http://support.brightcomputing.com/bigdata/hbase-1.2.0-bin.tar.gz",
+    "filename": "hbase-1.2.0-bin.tar.gz",
+    "interactions": [
+      "file_download",
+      "hbase-1.2.0"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+
+  "hbase-1.3.0": {
+    "tool_version": "1.3.0",
+    "interactions": [
+      "set_hbase_tool_setup"
+    ],
+    "comment": ""
+  },
+  "hbase-1.3.0-bin.tar.gz": {
+    "tool_tarball": "hbase-1.3.0-bin.tar.gz",
+    "tool_release": "1.3.0-bin",
+    "download_url": "http://support.brightcomputing.com/bigdata/hbase-1.3.0-bin.tar.gz",
+    "filename": "hbase-1.3.0-bin.tar.gz",
+    "interactions": [
+      "file_download",
+      "hbase-1.3.0"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+
+
+
+  "section__objects_for_hive" : {
+  },
+
+
+  "set_hive_basic_ensemble": {
+    "node": "$node",
+    "pre_command"                 : "for node in localhost ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "tool_javahome_options"       : "",
+    "interactions": [
+      "set_ssh_as_shell",
+      "set_hive_tool_setup",
+      "set_hive_password_system_metastore_hive",
+      "set_javaconnector_5.1.18"
+    ],
+    "comment": ""
+  },
+  "hive_metastore_setup": {
+    "interactions": [
+      "mysql_grant_access",
+      "mysql_drop_db"
+    ],
+    "comment": ""
+  },
+  "set_hive_password_system_metastore_hive": {
+    "tool_complementary_options": " -p system --metastoredb metastore_hive ", 
+    "mysql_user"                : "root",
+    "mysql_pw"                  : "system",
+    "mysql_db"                  : "metastore_hive",
+    "mysql_grant_user"          : "hive",
+    "mysql_grant_pw"            : "system",
+    "comment": ""
+  },
+  "set_javaconnector_5.1.34": {
+    "tool_connector_options"    : "--conn mysql-connector-java-5.1.34-bin.jar ",
+    "interactions" : ["mysql-connector-java-5.1.34-bin.jar"],
+    "comment": ""
+  },
+  "set_javaconnector_5.1.18": {
+    "tool_connector_options"    : "--conn mysql-connector-java-5.1.18-bin.jar",
+    "interactions" : ["mysql-connector-java-5.1.18-bin.jar"],
+    "comment": ""
+  },
+  "set_hive_tool_setup": {
+    "run_version_command": "module rm hive ; module load hive ;  which beeline ; echo |  beeline | tail -3 ; module rm hive ",
+    "tool_command"                : " which beeline ; echo |  beeline | tail -3 ",
+    "interactions": [
+      "hive",
+      "hadoop_namespace_tool_setup"
+    ],
+    "comment": "note: tool_complementary_options must be set."
+  },
+  "mysql-connector-java-5.1.18-bin.jar": {
+    "download_url"                : "http://support.brightcomputing.com/bigdata/mysql-connector-java-5.1.18-bin.jar",
+    "filename"                    : "mysql-connector-java-5.1.18-bin.jar", 
+    "interactions" : ["file_download"],
+    "comment"                     : ""
+  },
+  "mysql-connector-java-5.1.34-bin.jar": {
+    "download_url"                : "http://support.brightcomputing.com/bigdata/mysql-connector-java-5.1.34-bin.jar",
+    "filename"                    : "mysql-connector-java-5.1.34-bin.jar", 
+    "interactions" : ["file_download"],
+    "comment"                     : ""
+  },
+  "hive": {
+    "toolname": "hive",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+  "hive-1.2.1": {
+    "tool_version": "1.2.1",
+    "interactions": [
+      "set_hive_tool_setup"
+    ],
+    "comment": ""
+  },
+  "apache-hive-1.2.1-bin.tar.gz": {
+    "tool_tarball": "apache-hive-1.2.1-bin.tar.gz",
+    "tool_release": "1.2.1-bin",
+    "download_url": "http://support.brightcomputing.com/bigdata/apache-hive-1.2.1-bin.tar.gz",
+    "filename": "apache-hive-1.2.1-bin.tar.gz",
+    "interactions": [
+      "file_download",
+      "hive-1.2.1"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hive-1.2.1-bin.tar.gz": {
+    "interactions": [
+      "apache-hive-1.2.1-bin.tar.gz"
+    ],
+    "comment": "alias"
+  },
+  "hive-2.1.1": {
+    "tool_version": "2.1.1",
+    "interactions": [
+      "set_hive_tool_setup"
+    ],
+    "comment": ""
+  },
+  "apache-hive-2.1.1-bin.tar.gz": {
+    "tool_tarball": "apache-hive-2.1.1-bin.tar.gz",
+    "tool_release": "2.1.1-bin",
+    "download_url": "http://support.brightcomputing.com/bigdata/apache-hive-2.1.1-bin.tar.gz",
+    "filename": "apache-hive-2.1.1-bin.tar.gz",
+    "interactions": [
+      "file_download",
+      "hive-2.1.1"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+  "hive-2.1.1-bin.tar.gz": {
+    "interactions": [
+      "apache-hive-2.1.1-bin.tar.gz"
+    ],
+    "comment": "alias"
+  },
+
+
+  "accumulo": {
+    "toolname": "accumulo",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "alluxio": {
+    "toolname": "alluxio",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "drill": {
+    "toolname": "drill",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "flink": {
+    "toolname": "flink",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+
+  "giraph_generate_giraph.jar" : {
+    "command": [
+      { "literal" : "cd /tmp ; git clone http://git-wip-us.apache.org/repos/asf/giraph.git ; cd - ; cd /tmp/giraph ; curl -O https://issues.apache.org/jira/secure/attachment/12843736/GIRAPH-1110.02.patch ; patch -p1 < GIRAPH-1110.02.patch ;  mvn -Dhadoop.version=" },
+      { "replace" : "hadoop_version" },
+      { "literal" : " -Phadoop_2 -fae -DskipTests clean package ;  rm -rf /tmp/giraph.jar ; cp giraph-examples/target/giraph.*jar /tmp/giraph.jar ; cd - ; cp /tmp/giraph.jar . ; mv /tmp/giraph /tmp/giraph-$(echo puts Time.now.hash.abs | ruby)  " },
+      { "literal" : "" }
+    ],
+    "comment"                     : ""
+  },
+
+  "giraph": {
+    "toolname": "giraph",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "ignite": {
+    "toolname": "ignite",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "impala": {
+    "toolname": "impala",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "kafka": {
+    "toolname": "kafka",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "opentsdb": {
+    "toolname": "opentsdb",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "pig": {
+    "toolname": "pig",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+  "set_pig_basic_ensemble": {
+    "node": "$node",
+    "pre_command"                 : "for node in localhost ; do echo ; echo node=$node ;",
+    "post_command"                : " ; done",
+    "tool_complementary_options"  : "",
+    "tool_connector_options"      : "",
+    "tool_javahome_options"       : "",
+
+    "interactions": [
+      "set_ssh_as_shell",
+      "set_pig_tool_setup"
+    ],
+    "comment": ""
+  },
+  "set_pig_tool_setup": {
+    "run_version_command": "module rm pig ; module load pig ;  which  pig  ; echo | pig  ; module rm pig ",
+    "tool_command"                : " which  pig  ;  echo | pig  ",
+    "interactions": [
+      "pig",
+      "hadoop_namespace_tool_setup"
+    ],
+    "comment": "note: tool_complementary_options must be set."
+  },
+
+  "pig-0.14.0.2.2.9.0-3393": {
+    "tool_version": "0.14.0.2.2.9.0-3393",
+    "interactions": [
+      "set_pig_tool_setup"
+    ],
+    "comment": ""
+  },
+  "pig-0.14.0.2.2.9.0-3393.tar.gz": {
+    "tool_tarball": "pig-0.14.0.2.2.9.0-3393.tar.gz",
+    "tool_release": "0.14.0.2.2.9.0-3393",
+    "download_url": "http://support.brightcomputing.com/bigdata/pig-0.14.0.2.2.9.0-3393.tar.gz",
+    "filename": "pig-0.14.0.2.2.9.0-3393.tar.gz",
+    "interactions": [
+      "file_download",
+      "pig-0.14.0.2.2.9.0-3393"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+
+  "pig-0.16.0": {
+    "tool_version": "0.16.0",
+    "interactions": [
+      "set_pig_tool_setup"
+    ],
+    "comment": ""
+  },
+  "pig-0.16.0.tar.gz": {
+    "tool_tarball": "pig-0.16.0.tar.gz",
+    "tool_release": "0.16.0",
+    "download_url": "http://support.brightcomputing.com/bigdata/pig-0.16.0.tar.gz",
+    "filename": "pig-0.16.0.tar.gz",
+    "interactions": [
+      "file_download",
+      "pig-0.16.0"
+    ],
+    "comment": "due to a current limitation of interactions.rb, need to duplicate values. ideally, something like filename=tool_tarball"
+  },
+
+  "security": {
+    "toolname": "security",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "javahome_use_default_jdk": {
+    "jdk_home_script"             : "find /usr/lib/jvm/ /usr/java | grep bin/javac | head -1 | sed \"s/bin\\\/javac//\"",
+    "tool_javahome_options"       : " -j $(find /usr/lib/jvm/ /usr/java | grep bin/javac | head -1 | sed \"s/bin\\\/javac//\") ",
+    "comment": ""
+  },
+
+  "sqoop": {
+    "toolname": "sqoop",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "storm": {
+    "toolname": "storm",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "tez": {
+    "toolname": "tez",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+  "zeppelin": {
+    "toolname": "zeppelin",
+    "interactions": [
+      "hadoop_namespace_tool_setup",
+      "set_hadoop_as_traditional_namespace"
+    ],
+    "comment": ""
+  },
+
+
+  "section__objects_regression_prevention" : {
+    "comment"                     : ""
+  },
+
+
+  "git_branches_loop-regression_prevention" : {
+    "interactions": [
+	"git_stash","git_checkout_master","git_checkout_ribamar","git_checkout_7.3","git_branch","pwd","git_checkout_previous_branch","git_checkout_previous_branch","git_checkout_previous_branch","git_checkout_previous_branch","git_stash_pop","git_branch",
+	"unsed"
+    ],
+    "comment": "ensure that interactions can loop through many branches, do something (pwd in this case), return to the original branch and restore the state ."
+  },
+
+
+  "instance_remove_all_tools_twice" : {
+    "interactions": [
+	"comment:first removal of all tools",
+	"instance_remove_all_tools",
+	"comment:second removal of all tools",
+	"instance_remove_all_tools",
+
+	"unsed"
+    ],
+    "comment": ""
+  },
+
+
+  "multiple_bigdata_tools_test" : {
+    "interactions": [
+	"comment:clean up eventual test run before this",
+	"multiple_bigdata_tools_test_cleanup",
+
+	"comment:install hadoop instance, having 2.7.1 version number, removing it before if needed",
+	"hadoop271_nohb_nozk_instance","bigdata_instance_install",
+
+	"comment:install tools on that instance; the first has to be zookeeper or tools like hbase won't work",
+	"set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_install",
+	"set_hive_basic_ensemble","hive_metastore_setup", "apache-hive-1.2.1-bin.tar.gz","tool_install",
+	"set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_install",
+	"set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_install",
+        "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_install",
+
+	"comment:sed the service files to simulate that they're written without the symlinky technique",
+	"bigdata_update_service_files_using_defaults",
+
+	"comment:test tools on that instance",
+	"spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+	"comment:update the tools on that instance to a newer version",
+	"set_zookeeper_basic_ensemble","zookeeper-3.4.8.tar.gz","tool_update",
+	"set_hive_basic_ensemble","apache-hive-2.1.1-bin.tar.gz","tool_update",
+	"set_hbase_basic_ensemble","hbase-1.3.0-bin.tar.gz","tool_update",
+	"set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+        "set_pig_basic_ensemble","pig-0.16.0.tar.gz","tool_update",
+
+	"comment:test updated tools on that instance",
+	"spark-1.6.0-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+	"comment:simulate failure to upgrade the hadoop instance to 2.7.2",
+	"node001","simulate:make_hadoop_non_upgradable_reversible",
+	"hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+	"node001","simulate:make_hadoop_non_upgradable_revert",
+	"hadoop-2.7.1","interactions.rb","hadoop_wordcount_example",
+
+	"comment:succeed to upgrade the hadoop instance to 2.7.2",
+	"hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+	"hadoop-2.7.2","interactions.rb","hadoop_wordcount_example",
+
+	"comment:update the tools on that instance to an older version",
+	"set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_update",
+	"set_hive_basic_ensemble","apache-hive-1.2.1-bin.tar.gz","tool_update",
+	"set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_update",
+	"set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_update",
+        "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_update",
+
+	"comment:test updated tools on that instance",
+	"spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+
+	"comment:test Spark instance, test, update, test again",
+
+	"sparkStandalone_instance","bigdata_instance_install","spark_example_pi_1","spark_submit_job",
+	"set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+	"spark_example_pi_1","spark_submit_job",
+
+	"unsed"
+    ],
+    "comment": ""
+  },
+
+
+  "multiple_bigdata_tools_test_cleanup" : {
+    "interactions": [
+	"comment:uninstall the tools on the hadoop instance",
+	"hadoop271_nohb_nozk_instance", "instance_remove_all_tools",
+
+	"comment:clean up, removing the hadoop instance",
+	"hadoop271_nohb_nozk_instance", "instance_force_removal",
+
+	"comment:clean up, removing the spark instance",
+	"sparkStandalone_instance","instance_force_removal",
+
+	"comment:reboot computenodes",
+	"computenodes_reboot",
+
+	"unsed"
+    ],
+    "comment": ""
+  },
+
+
+  "section__deprecated_objects" : {
+  },
+
+
+  "unused" : {
+  }
+}
