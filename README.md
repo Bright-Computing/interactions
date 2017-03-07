@@ -19,17 +19,10 @@ Tool for automatizing the generation of scripts
 
 Requisites
 ----------
-* ruby (at least 1.9.3)
+* ruby (at least 1.9.3, tested mostly in 2.3.1)
 * these gems are required:
 ```
-require "rubygems"
-require "open3"
-require "json"
-require "pp"
-require 'optparse'
-require "singleton"
-require 'xmlsimple'
-require 'hashdiff'
+gem install xml-simple hashdiff
 ```
 
 
