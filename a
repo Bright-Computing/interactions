@@ -1,7 +1,0 @@
-put
-{"_index"=>"blog",
- "_type"=>"post",
- "_id"=>"4",
- "_version"=>11,
- "found"=>true,
- "_source"=>{"user"=>"dilbert"}}
