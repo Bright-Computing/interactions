@@ -81,3 +81,7 @@ require 'open-uri'
 require 'curb'
 require 'cgi'
 ```
+This command must suffice:
+```
+gem install io-console webrick
+```
