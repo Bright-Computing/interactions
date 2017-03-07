@@ -108,7 +108,7 @@ This way onwards, it is possible to, departing from a very naive interaction (ie
 Defining Interactions - Composite Pattern and how we use them for Regression Tests:
 ----------
 
-Let's have a look at *definition of the interaction `hadoop271_nohb_nozk_instance`*:
+Let's have a look at **definition of the interaction `hadoop271_nohb_nozk_instance`**:
 ```
   "hadoop271_nohb_nozk_instance" : {
     "instance_name"               : "hadoop271_nohb_nozk",
@@ -117,7 +117,7 @@ Let's have a look at *definition of the interaction `hadoop271_nohb_nozk_instanc
   },
 ```
 
-That means that, *running `hadoop271_nohb_nozk_instance` is equivalent of running the sequence `hadoop-2.7.1.tar.gz,hadoop-2.7.1-no_hbase_no_zk.xml,hadoop_bigdata_instance` with the property `instance_name` set to `hadoop271_nohb_nozk`*.
+That means that, **running `hadoop271_nohb_nozk_instance` is equivalent of running the sequence `hadoop-2.7.1.tar.gz,hadoop-2.7.1-no_hbase_no_zk.xml,hadoop_bigdata_instance` with the property `instance_name` set to `hadoop271_nohb_nozk`**.
 
 Running `hadoop-2.7.1.tar.gz` is equivalent of running `file_download` and `hadoop-2.7.1`, with some more properties set:
 
@@ -146,7 +146,7 @@ Running `file_download` is equivalent of running a command that reacts on the `d
   },
 ```
 
-In the end, after all the tree is computed, *running `hadoop271_nohb_nozk_instance` will, indeed, run this sequence of interactions*:
+In the end, after all the tree is computed, **running `hadoop271_nohb_nozk_instance` will, indeed, run this sequence of interactions**:
 
 ```
     "hadoop271_nohb_nozk_instance",
@@ -179,7 +179,7 @@ Note that `file_download` is run twice. The second time, it will download the ur
   },
 ```
 
-After the tree is computed, *running `hadoop_instance_install` will run this sequence of interactions*:
+After the tree is computed, **running `hadoop_instance_install` will run this sequence of interactions**:
 
 
 ```
@@ -202,7 +202,7 @@ Only `while_command` and `instance_install_when_nodes_up` have commands to run; 
 
 Note that `cm-hadoop-setup` doesn't know which xml file to use as parameter, because `instance_install_when_nodes_up` reacts on the property `filename`, that was not set before (undefined property is always replaced by an empty string).
 
-After the tree is computed, *running `hadoop271_nohb_nozk_instance,hadoop_instance_install` will run this sequence of interactions*:
+After the tree is computed, **running `hadoop271_nohb_nozk_instance,hadoop_instance_install` will run this sequence of interactions**:
 
 ```
     "hadoop271_nohb_nozk_instance",
@@ -224,7 +224,7 @@ After the tree is computed, *running `hadoop271_nohb_nozk_instance,hadoop_instan
     "while_command",
     "instance_install_when_nodes_up"
 ```
-which is *exactly the sum of each of sequences run by the interactions `hadoop271_nohb_nozk_instance` and `hadoop_instance_install`*. The generated scripts are the same:
+which is **exactly the sum of each of sequences run by the interactions `hadoop271_nohb_nozk_instance` and `hadoop_instance_install`**. The generated scripts are the same:
 
 ```
 wget -nv -c "http://support.brightcomputing.com/bigdata/hadoop-2.7.1.tar.gz" --output-document="hadoop-2.7.1.tar.gz"
@@ -299,7 +299,7 @@ An interaction can be defined in terms of other interactions, following the comp
     "comment": ""
   },
 ```
-As of today, that 44-interaction sequences will spawn a sequence of 2994 interactions.
+As of today, that **44-interaction sequences will spawn a sequence of 2994 interactions**.
 `multiple_bigdata_tools_test`
 basically installs specific versions of certain tools that work together with Spark or Hadoop. Repeating
 tests with a slightly different case is just matter of adding some new interactions (in general 
