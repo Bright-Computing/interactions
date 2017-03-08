@@ -15,15 +15,15 @@ Copyright 2017 Bright Computing Holding BV.
 -->
 
 # interactions
-`interactions.rb` is a tool for automatizing the generation of scripts (currently only
-bash), and executing combinations of them. Each of those combinations are called
+`interactions.rb` is a tool for **automatizing the generation of scripts** (currently only
+bash), and **executing combinations of them**. Each of those combinations are called
 `interactions`.
 
 `interactions.rb`, although a general purpose tool, designed to generate any kind of text streams (or
 scripts) to be executed by any processor callable in ruby (although currently tested only in bash),
 was started for keeping up with the growing combinations of tools that can be installed and managed
-using the big data plugin of Bright Cluster Manager. We needed a tool where we could describe complex
-test cases as self descriptive as:
+using the big data plugin of Bright Cluster Manager. We needed a tool where we could **describe 
+and execute complex test cases as self descriptive as**:
 
 ```
   "multiple_bigdata_tools_test" : {
