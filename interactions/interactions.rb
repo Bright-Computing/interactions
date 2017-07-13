@@ -82,6 +82,34 @@ class Globals
 end
 
 
+
+def prepareInteractions enum
+  r = enum.map { |element|
+    e = [ element ].flatten 1
+    e
+  }
+  r
+end
+
+def combineInteractions enum
+  #  enum must be an enumeration
+  #  [ A , [ B, C ] ]  returns [ [A, B], [ A, C] ]
+  enum = enum.map {|element|
+    begin
+      (combineInteractions element)
+    rescue NoMethodError => e1 # element not an enumeration:
+      element
+    end
+  }.flatten 1
+  enum = prepareInteractions enum
+  firstEnum = enum.first || []
+  remainingEnum = enum[1..-1] || []
+  r = (firstEnum.product *remainingEnum)
+  r
+end
+
+
+
 def getChilds interactionsObject, interaction
   globals  = Globals.instance
   messageBroker = Globals.instance.messageBroker
@@ -93,7 +121,9 @@ def getChilds interactionsObject, interaction
     (s interactionsObject[interaction], "interactionsObject[#{interaction}]")
   messageBroker.produce ["all", "getChilds"],
     (s interactionsObject[interaction]["interactions"], "interactionsObject[#{interaction}][interactions]")
-  interactionsObject[interaction]["interactions"]
+  interactionNames = interactionsObject[interaction]["interactions"] || []
+  interactionNames = (combineInteractions interactionNames).flatten
+  interactionsObject[interaction]["interactions"] = interactionNames
 end
 
 
