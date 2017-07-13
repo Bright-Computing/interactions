@@ -4523,65 +4523,64 @@
     "comment": ""
   },
 
-
   "multiple_bigdata_tools_test" : {
     "interactions": [
-	"comment:clean up eventual test run before this",
-	"multiple_bigdata_tools_test_cleanup",
+      "comment:clean up eventual test run before this",
+      "multiple_bigdata_tools_test_cleanup",
 
-	"comment:install hadoop instance, having 2.7.1 version number, removing it before if needed",
-	"hadoop271_nohb_nozk_instance","bigdata_instance_install",
+      "comment:install hadoop instance, having 2.7.1 version number, removing it before if needed",
+      "hadoop271_nohb_nozk_instance","bigdata_instance_install",
 
-	"comment:install tools on that instance; the first has to be zookeeper or tools like hbase won't work",
-	"set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_install",
-	"set_hive_basic_ensemble","hive_metastore_setup", "apache-hive-1.2.1-bin.tar.gz","tool_install",
-	"set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_install",
-	"set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_install",
-        "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_install",
+      "comment:install tools on that instance; the first has to be zookeeper or tools like hbase won't work",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_install",
+      "set_hive_basic_ensemble","hive_metastore_setup", "apache-hive-1.2.1-bin.tar.gz","tool_install",
+      "set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_install",
+      "set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_install",
+      "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_install",
 
-	"comment:sed the service files to simulate that they're written without the symlinky technique",
-	"bigdata_update_service_files_using_defaults",
+      "comment:sed the service files to simulate that they're written without the symlinky technique",
+      "bigdata_update_service_files_using_defaults",
 
-	"comment:test tools on that instance",
-	"spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+      "comment:test tools on that instance",
+      "spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
 
-	"comment:update the tools on that instance to a newer version",
-	"set_zookeeper_basic_ensemble","zookeeper-3.4.8.tar.gz","tool_update",
-	"set_hive_basic_ensemble","apache-hive-2.1.1-bin.tar.gz","tool_update",
-	"set_hbase_basic_ensemble","hbase-1.3.0-bin.tar.gz","tool_update",
-	"set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
-        "set_pig_basic_ensemble","pig-0.16.0.tar.gz","tool_update",
+      "comment:update the tools on that instance to a newer version",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.8.tar.gz","tool_update",
+      "set_hive_basic_ensemble","apache-hive-2.1.1-bin.tar.gz","tool_update",
+      "set_hbase_basic_ensemble","hbase-1.3.0-bin.tar.gz","tool_update",
+      "set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+      "set_pig_basic_ensemble","pig-0.16.0.tar.gz","tool_update",
 
-	"comment:test updated tools on that instance",
-	"spark-1.6.0-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+      "comment:test updated tools on that instance",
+      "spark-1.6.0-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
 
-	"comment:simulate failure to upgrade the hadoop instance to 2.7.2",
-	"node001","simulate:make_hadoop_non_upgradable_reversible",
-	"hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
-	"node001","simulate:make_hadoop_non_upgradable_revert",
-	"hadoop-2.7.1","interactions.rb","hadoop_wordcount_example",
+      "comment:simulate failure to upgrade the hadoop instance to 2.7.2",
+      "node001","simulate:make_hadoop_non_upgradable_reversible",
+      "hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+      "node001","simulate:make_hadoop_non_upgradable_revert",
+      "hadoop-2.7.1","interactions.rb","hadoop_wordcount_example",
 
-	"comment:succeed to upgrade the hadoop instance to 2.7.2",
-	"hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
-	"hadoop-2.7.2","interactions.rb","hadoop_wordcount_example",
+      "comment:succeed to upgrade the hadoop instance to 2.7.2",
+      "hadoop-2.7.2.tar.gz","tool_upgrade_explicit",
+      "hadoop-2.7.2","interactions.rb","hadoop_wordcount_example",
 
-	"comment:update the tools on that instance to an older version",
-	"set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_update",
-	"set_hive_basic_ensemble","apache-hive-1.2.1-bin.tar.gz","tool_update",
-	"set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_update",
-	"set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_update",
-        "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_update",
+      "comment:update the tools on that instance to an older version",
+      "set_zookeeper_basic_ensemble","zookeeper-3.4.6.tar.gz","tool_update",
+      "set_hive_basic_ensemble","apache-hive-1.2.1-bin.tar.gz","tool_update",
+      "set_hbase_basic_ensemble","hbase-1.2.0-bin.tar.gz","tool_update",
+      "set_spark_basic_ensemble","spark-1.5.1-bin-hadoop2.6.tgz","tool_update",
+      "set_pig_basic_ensemble","pig-0.14.0.2.2.9.0-3393.tar.gz","tool_update",
 
-	"comment:test updated tools on that instance",
-	"spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
+      "comment:test updated tools on that instance",
+      "spark-1.5.1-bin-hadoop2.6.tgz", "spark_example_pi_1","spark_submit_job",
 
-	"comment:test Spark instance, test, update, test again",
+      "comment:test Spark instance, test, update, test again",
 
-	"sparkStandalone_instance","bigdata_instance_install","spark_example_pi_1","spark_submit_job",
-	"set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
-	"spark_example_pi_1","spark_submit_job",
+      "sparkStandalone_instance","bigdata_instance_install","spark_example_pi_1","spark_submit_job",
+      "set_spark_basic_ensemble","spark-1.6.0-bin-hadoop2.6.tgz","tool_update",
+      "spark_example_pi_1","spark_submit_job",
 
-	"unsed"
+      "unsed"
     ],
     "comment": ""
   },
@@ -4604,6 +4603,26 @@
 	"unsed"
     ],
     "comment": ""
+  },
+
+
+  "section__objects_for_combination_testing" : {
+    "comment"                     : "they don't yet work."
+  },
+
+  "echo_hello": {
+    "command": [
+      { "literal"      : "echo hello" }
+    ]
+  },
+  "echo_world": {
+    "command": [
+      { "literal"      : "echo world" }
+    ]
+  },
+  "combination_test": {
+    "interactions" : [["pwd", "df"] , ["echo_hello", "echo_world"]],
+    "comment"                     : ""
   },
 
 
